@@ -1,0 +1,30 @@
+{
+  "name": "moment-business-days",
+  "version": "0.0.1",
+  "description": "MomentJS pluin to use business days ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kalmecak/moment-business-days.git"
+  },
+  "keywords": [
+    "moment",
+    "momentjs",
+    "business",
+    "days",
+    "pluin"
+  ],
+  "dependencies": {
+    "moment": "2.9.x",
+  },
+  "engine": "node >= 0.10.26",
+  "author": "Christian Rodriguez Cisneros <rcchristiane@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kalmecak/moment-business-days/issues"
+  },
+  "homepage": "https://github.com/kalmecak/moment-business-days"
+}
