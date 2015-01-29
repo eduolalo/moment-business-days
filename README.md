@@ -57,4 +57,4 @@ moment('30-01-2015', 'DD-MM-YYYY').nextBusinessDay()._d // Mon Feb 02 2015 00:00
 moment('02-02-2015', 'DD-MM-YYYY').nextBusinessDay()._d //Tue Feb 03 2015 00:00:00 GMT-0600 (CST)
 ```
 
-The objects returned by functions are momentjs objects (**except isBusinessDay**) so you can handle them with moment native functions.
+The objects returned by functions are momentjs objects (**except isBusinessDay**) so you can handle it with moment native functions.
