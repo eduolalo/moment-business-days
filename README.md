@@ -57,4 +57,64 @@ moment('30-01-2015', 'DD-MM-YYYY').nextBusinessDay()._d // Mon Feb 02 2015 00:00
 moment('02-02-2015', 'DD-MM-YYYY').nextBusinessDay()._d //Tue Feb 03 2015 00:00:00 GMT-0600 (CST)
 ```
 
+**monthBusinessDays()**
+
+Retrieve an array of the business days in the month, each one is a moment object.
+
+```javascript
+//Busines days in month January 2015
+moment('01-01-2015', 'DD-MM-YYYY').monthBusinessDays()
+
+/*
+[ { _isAMomentObject: true,
+    _i: '01-01-2015',
+    _f: 'DD-MM-YYYY',
+    _isUTC: false,
+    _pf:{ ... },
+    _locale: { ... },
+    _d: Thu Jan 01 2015 00:00:00 GMT-0600 (CST)
+  } {
+   ...
+  },
+  ( ... )
+]
+*/
+```
+
+**monthNaturalDays()**
+
+Is like monthBusinessDays(), but this method will include the weekends on it's response.
+
+**monthBusinessWeeks()**
+
+Retrieve an array of arrays, these arrays are the representation of a business weeks and each week (array) have it own business days (Monday to Friday). There could be the case that one week (array) have less than 5 days, this is because the month started on the middle of the week, for example: the first week of January 2015 just have two days, Thursday 1st and Friday 2nd. **Each day in the week arrays are moment objects.**
+
+```javascript
+//Busines weeks in month January 2015
+moment('01-01-2015', 'DD-MM-YYYY').monthBusinessWeeks()
+
+/*
+[ [ { _isAMomentObject: true,
+      _i: '01-01-2015',
+      _f: 'DD-MM-YYYY',
+      _isUTC: false,
+      _pf: [...],
+      _locale: [...],
+      _d: Thu Jan 01 2015 00:00:00 GMT-0600 (CST) 
+    }, { _isAMomentObject: true,
+      _i: '01-01-2015',
+      _f: 'DD-MM-YYYY',
+      _isUTC: false,
+      _pf: [...],
+      _locale: [...],
+      _d: Fri Jan 02 2015 00:00:00 GMT-0600 (CST) }
+  ],
+  [...]
+]
+*/
+```
+**monthBusinessWeeks()**
+
+It's like monthBusinessWeeks(), but this method will include weekends on it's response.
+
 The objects returned by functions are momentjs objects (**except isBusinessDay**) so you can handle it with moment native functions.
