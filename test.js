@@ -25,8 +25,8 @@ console.log(moment('01-01-2015', 'DD-MM-YYYY').monthBusinessDays());
 console.log('Busines weeks in this month: ')
 console.log(moment('01-01-2015', 'DD-MM-YYYY').monthBusinessWeeks());
 
-console.log('Busines days in this month: ')
+console.log('Natural days in this month: ')
 console.log(moment('01-01-2015', 'DD-MM-YYYY').monthNaturalDays());
 
-console.log('Busines weeks in this month: ')
+console.log('Natural weeks in this month: ')
 console.log(moment('01-01-2015', 'DD-MM-YYYY').monthNaturalWeeks());
