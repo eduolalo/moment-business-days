@@ -81,6 +81,21 @@ moment.fn.monthBusinessDays = function() {
     return daysArr;
 };
 
+moment.fn.monthNaturalDays = function() {
+    var me = this.clone();
+    var day = me.clone().startOf('month');
+    var end = me.clone().endOf('month');
+    var daysArr = [];
+    var done = false;
+    while (!done) {
+        daysArr.push(day.clone());
+        if(end.diff(day.add(1,'d')) < 0) {
+            done = true;
+        };
+    };
+    return daysArr;
+};
+
 moment.fn.monthBusinessWeeks = function() {
     var me = this.clone();
     var day = me.clone().startOf('month');
@@ -94,6 +109,27 @@ moment.fn.monthBusinessWeeks = function() {
             daysArr.push(day.clone());
         };
         if(day.day() === 5) {
+            weeksArr.push(daysArr);
+            daysArr = [];
+        };
+        if(end.diff(day.add(1,'d')) < 0) {
+            done = true;
+        };
+    };
+    return weeksArr;
+};
+
+moment.fn.monthNaturalWeeks = function() {
+    var me = this.clone();
+    var day = me.clone().startOf('month');
+    var end = me.clone().endOf('month');
+    var weeksArr = [];
+    var daysArr = [];
+    var done = false;
+
+    while(!done) {
+        daysArr.push(day.clone());
+        if(day.day() === 6) {
             weeksArr.push(daysArr);
             daysArr = [];
         };
