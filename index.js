@@ -62,6 +62,46 @@ moment.fn.nextBusinessDay = function() {
         loop++;
     };
     return this;
-}
+};
+
+moment.fn.monthBusinessDays = function() {
+    var me = this.clone();
+    var day = me.clone().startOf('month');
+    var end = me.clone().endOf('month');
+    var daysArr = [];
+    var done = false;
+    while (!done) {
+        if (day.isBusinessDay()) {
+            daysArr.push(day.clone());
+        };
+        if(end.diff(day.add(1,'d')) < 0) {
+            done = true;
+        };
+    };
+    return daysArr;
+};
+
+moment.fn.monthBusinessWeeks = function() {
+    var me = this.clone();
+    var day = me.clone().startOf('month');
+    var end = me.clone().endOf('month');
+    var weeksArr = [];
+    var daysArr = [];
+    var done = false;
+
+    while(!done) {
+        if(day.day() >= 1 && day.day() < 6) {
+            daysArr.push(day.clone());
+        };
+        if(day.day() === 5) {
+            weeksArr.push(daysArr);
+            daysArr = [];
+        };
+        if(end.diff(day.add(1,'d')) < 0) {
+            done = true;
+        };
+    };
+    return weeksArr;
+};
 
 module.exports = moment;
