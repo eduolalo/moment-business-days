@@ -113,7 +113,7 @@ moment('01-01-2015', 'DD-MM-YYYY').monthBusinessWeeks()
 ]
 */
 ```
-**monthBusinessWeeks()**
+**monthNaturalWeeks()**
 
 It's like monthBusinessWeeks(), but this method will include weekends on it's response.
 
