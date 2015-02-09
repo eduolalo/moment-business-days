@@ -96,9 +96,9 @@ moment.fn.monthNaturalDays = function() {
     return daysArr;
 };
 
-moment.fn.monthBusinessWeeks = function() {
+moment.fn.monthBusinessWeeks = function(fromToday) {
     var me = this.clone();
-    var day = me.clone().startOf('month');
+    var day = fromToday ? me.clone() : me.clone().startOf('month');
     var end = me.clone().endOf('month');
     var weeksArr = [];
     var daysArr = [];
@@ -119,9 +119,9 @@ moment.fn.monthBusinessWeeks = function() {
     return weeksArr;
 };
 
-moment.fn.monthNaturalWeeks = function() {
+moment.fn.monthNaturalWeeks = function(fromToday) {
     var me = this.clone();
-    var day = me.clone().startOf('month');
+    var day = fromToday ? me.clone() : me.clone().startOf('month');
     var end = me.clone().endOf('month');
     var weeksArr = [];
     var daysArr = [];
