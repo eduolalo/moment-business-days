@@ -81,9 +81,9 @@ moment.fn.monthBusinessDays = function() {
     return daysArr;
 };
 
-moment.fn.monthNaturalDays = function() {
+moment.fn.monthNaturalDays = function(fromToday) {
     var me = this.clone();
-    var day = me.clone().startOf('month');
+    var day = fromToday ? me.clone() : me.clone().startOf('month');
     var end = me.clone().endOf('month');
     var daysArr = [];
     var done = false;
