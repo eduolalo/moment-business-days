@@ -113,6 +113,9 @@ moment.fn.monthBusinessWeeks = function(fromToday) {
             daysArr = [];
         };
         if(end.diff(day.add(1,'d')) < 0) {
+            if(daysArr.length < 5) {
+                weeksArr.push(daysArr);
+            };
             done = true;
         };
     };
@@ -134,6 +137,9 @@ moment.fn.monthNaturalWeeks = function(fromToday) {
             daysArr = [];
         };
         if(end.diff(day.add(1,'d')) < 0) {
+            if(daysArr.length < 7) {
+                weeksArr.push(daysArr);
+            };
             done = true;
         };
     };
