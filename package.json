@@ -4,7 +4,7 @@
   "description": "MomentJS pluin to use business days ",
   "main": "index.js",
   "scripts": {
-    "test": "./test.js"
+    "test": "node ./test.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,8 @@
     "pluin"
   ],
   "dependencies": {
-    "moment": "2.10.x"
+    "moment": "2.10.x",
+    "underscore": "^1.8.3"
   },
   "engine": "node >= 0.10.26",
   "author": "Christian Rodriguez Cisneros <rcchristiane@gmail.com>",
