@@ -1,8 +1,14 @@
 'use strict';
 var moment = require('moment');
+var _ = require('underscore');
 
 moment.fn.isBusinessDay = function() {
-    return !(this.day() === 0 || this.day() === 6);
+    var locale = this.locale('us')._locale; // not sure this is the way to access it
+    if (this.day() === 0 || this.day() === 6) return false;
+    if (locale._holidays) {
+        if (locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0) return false;  
+    }
+    return true; 
 };
 
 moment.fn.businessDiff = function(param) {
@@ -57,6 +63,18 @@ moment.fn.nextBusinessDay = function() {
     var limit = 7;
     while (loop < limit) {
         if (this.add(1, 'd').isBusinessDay()) {
+            break;
+        };
+        loop++;
+    };
+    return this;
+};
+
+moment.fn.prevBusinessDay = function() {
+    var loop = 1;
+    var limit = 7;
+    while (loop < limit) {
+        if (this.subtract(1, 'd').isBusinessDay()) {
             break;
         };
         loop++;
