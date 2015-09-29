@@ -17,6 +17,18 @@ moment.fn.isBusinessDay = function() {
     return true; 
 };
 
+moment.fn.businessDaysIntoMonth = function () {
+    var businessDay = this.isBusinessDay() ? this : this.prevBusinessDay();
+    var monthBusinessDays = businessDay.monthBusinessDays();
+    var businessDaysIntoMonth;
+    monthBusinessDays.map(function (day, index) {
+        if (day.format('M/DD/YY') === businessDay.format('M/DD/YY'))
+            businessDaysIntoMonth = index + 1; 
+    });
+        
+    return businessDaysIntoMonth;
+};
+
 moment.fn.businessDiff = function(param) {
     param = moment(param);
     var signal = param.unix() < this.unix()?1:-1;

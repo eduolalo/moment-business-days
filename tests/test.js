@@ -1,7 +1,7 @@
 'use strict';
 var moment = require('../index');
 var expect = require("chai").expect
-var holidayFormat = 'DD-MM-YYYY';
+var holidayFormat = 'MM-DD-YYYY';
 
 var resetLocale = function (done) {
     moment.locale('us', {});
@@ -36,7 +36,7 @@ describe('Moment Business Days', function () {
         }); 
         describe('When today is a holiday', function () {
             
-            var july4th = '04-07-2015';
+            var july4th = '07-04-2015';
             
             beforeEach(function (done) {
                 moment.locale('us', {
@@ -54,5 +54,25 @@ describe('Moment Business Days', function () {
             });
         });     
     });
-    
+    describe('.businessDaysIntoMonth', function () {
+        
+        afterEach(resetLocale);
+        
+        describe('On Wednesday, September 23rd 2015', function () {
+            it('should be 17 when there are no holidays', function (done) {
+                var businessDaysIntoMonth = moment('09-23-2015', 'MM-DD-YYYY').businessDaysIntoMonth();
+                expect(businessDaysIntoMonth).to.eql(17);
+                done();
+            });
+            it('should be 16 when considering labor day', function (done) {
+                moment.locale('us', {
+                    holidays: ['09-07-2015'],
+                    holidayFormat: holidayFormat
+                });
+                var businessDaysIntoMonth = moment('09-23-2015', 'MM-DD-YYYY').businessDaysIntoMonth();
+                expect(businessDaysIntoMonth).to.eql(16);
+                done();
+            });
+        });      
+    });
 });
