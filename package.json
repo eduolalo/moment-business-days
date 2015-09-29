@@ -4,7 +4,8 @@
   "description": "MomentJS pluin to use business days ",
   "main": "index.js",
   "scripts": {
-    "test": "node ./test.js"
+    "test": "node ./test.js",
+    "mochatest": "mocha tests/*"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,9 @@
   "bugs": {
     "url": "https://github.com/kalmecak/moment-business-days/issues"
   },
-  "homepage": "https://github.com/kalmecak/moment-business-days"
+  "homepage": "https://github.com/kalmecak/moment-business-days",
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "mocha": "^2.3.3"
+  }
 }
