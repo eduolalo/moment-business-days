@@ -14,13 +14,15 @@ var moment = require('moment-business-days');
 
 ````
 
-#### Use localizaton to configure holidays
+#### Use localizaton to configure holidays:
 
 ````javascript
 
 var moment = require('moment-business-days');
+
 var july4th = '07-04-2015';
 var laborDay = '09-07-2015';
+
 moment.locale('us', {
    holidays: [july4th, laborDay],
    holidayFormat: 'MM-DD-YYYY' 
