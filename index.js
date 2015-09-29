@@ -1,13 +1,20 @@
 'use strict';
 var moment = require('moment');
-var _ = require('underscore');
+
+moment.fn.isHoliday = function () {
+    var isHoliday = false;
+    var locale = this.localeData();
+    
+    if (locale._holidays) {
+        if (locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0) return true;  
+    }
+    
+    return isHoliday;
+};
 
 moment.fn.isBusinessDay = function() {
-    var locale = this.locale('us')._locale; // not sure this is the way to access it
     if (this.day() === 0 || this.day() === 6) return false;
-    if (locale._holidays) {
-        if (locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0) return false;  
-    }
+    if (this.isHoliday()) return false;
     return true; 
 };
 
