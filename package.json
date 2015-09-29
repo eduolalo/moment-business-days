@@ -19,8 +19,7 @@
     "pluin"
   ],
   "dependencies": {
-    "moment": "2.10.x",
-    "underscore": "^1.8.3"
+    "moment": "2.10.x"
   },
   "engine": "node >= 0.10.26",
   "author": "Christian Rodriguez Cisneros <rcchristiane@gmail.com>",
