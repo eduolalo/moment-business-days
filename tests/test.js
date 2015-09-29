@@ -9,6 +9,16 @@ var resetLocale = function (done) {
 };
 
 describe('Moment Business Days', function () {
+    describe('.prevBusinessDay', function () {
+        describe('When today is Monday', function () {
+            it('should be Friday', function (done) {
+                var monday = moment().startOf('week').add(1, 'days');
+                var friday = monday.prevBusinessDay();
+                expect(friday.format('dddd')).to.eql('Friday');
+                done();
+            });
+        });      
+    });
     describe('.isBusinessDay', function () {
         describe('When today is a regular weekday', function () {
             it('should be true', function (done) {
