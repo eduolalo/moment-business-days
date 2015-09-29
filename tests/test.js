@@ -27,12 +27,10 @@ describe('Moment Business Days', function () {
         describe('When today is a holiday', function () {
             
             var july4th = '04-07-2015';
-            var laborDay = '07-09-2015';
-            var regularDay = '28-09-2015';
             
             beforeEach(function (done) {
                 moment.locale('us', {
-                    holidays: [july4th, laborDay],
+                    holidays: [july4th],
                     holidayFormat: holidayFormat
                 });
                 done();

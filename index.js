@@ -2,14 +2,13 @@
 var moment = require('moment');
 
 moment.fn.isHoliday = function () {
-    var isHoliday = false;
     var locale = this.localeData();
     
     if (locale._holidays) {
         if (locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0) return true;  
     }
     
-    return isHoliday;
+    return false;
 };
 
 moment.fn.isBusinessDay = function() {
