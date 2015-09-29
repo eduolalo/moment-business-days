@@ -57,6 +57,18 @@ moment('30-01-2015', 'DD-MM-YYYY').nextBusinessDay()._d // Mon Feb 02 2015 00:00
 moment('02-02-2015', 'DD-MM-YYYY').nextBusinessDay()._d //Tue Feb 03 2015 00:00:00 GMT-0600 (CST)
 ```
 
+**prevBusinessDay()**
+
+Will retrieve the previous business date as moment date object:
+
+```javascript
+//Previous busines day of Monday 02-02-2015
+moment('02-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d // Fri Jan 30 2015 00:00:00 GMT-0600 (CST)
+
+//Previous busines day of Tuesday 03-02-2015
+moment('03-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d //Mon Feb 02 2015 00:00:00 GMT-0600 (CST)
+```
+
 **monthBusinessDays()**
 
 Retrieve an array of the business days in the month, each one is a moment object.
