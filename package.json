@@ -1,6 +1,6 @@
 {
   "name": "moment-business-days",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "MomentJS pluin to use business days ",
   "main": "index.js",
   "scripts": {
