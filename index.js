@@ -1,8 +1,20 @@
 'use strict';
 var moment = require('moment');
 
+moment.fn.isHoliday = function () {
+    var locale = this.localeData();
+    
+    if (locale._holidays) {
+        if (locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0) return true;  
+    }
+    
+    return false;
+};
+
 moment.fn.isBusinessDay = function() {
-    return !(this.day() === 0 || this.day() === 6);
+    if (this.day() === 0 || this.day() === 6) return false;
+    if (this.isHoliday()) return false;
+    return true; 
 };
 
 moment.fn.businessDiff = function(param) {
@@ -57,6 +69,18 @@ moment.fn.nextBusinessDay = function() {
     var limit = 7;
     while (loop < limit) {
         if (this.add(1, 'd').isBusinessDay()) {
+            break;
+        };
+        loop++;
+    };
+    return this;
+};
+
+moment.fn.prevBusinessDay = function() {
+    var loop = 1;
+    var limit = 7;
+    while (loop < limit) {
+        if (this.subtract(1, 'd').isBusinessDay()) {
             break;
         };
         loop++;

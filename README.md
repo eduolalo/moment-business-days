@@ -11,7 +11,29 @@ This is a momentJS plugin that allows you to use only business days (Monday to F
 
 var moment = require('moment-business-days');
 // You'll be able use moment as you normally do
+
 ````
+
+#### Use localizaton to configure holidays:
+
+````javascript
+
+var moment = require('moment-business-days');
+
+var july4th = '07-04-2015';
+var laborDay = '09-07-2015';
+
+moment.locale('us', {
+   holidays: [july4th, laborDay],
+   holidayFormat: 'MM-DD-YYYY' 
+});
+
+// moment-business-days will now stop considering these holidays as business days
+
+````
+#### Run Tests:
+
+`npm test`
 
 ### Methods:
 
@@ -55,6 +77,18 @@ moment('30-01-2015', 'DD-MM-YYYY').nextBusinessDay()._d // Mon Feb 02 2015 00:00
 
 //Next busines day of Monday 02-02-2015
 moment('02-02-2015', 'DD-MM-YYYY').nextBusinessDay()._d //Tue Feb 03 2015 00:00:00 GMT-0600 (CST)
+```
+
+**prevBusinessDay()**
+
+Will retrieve the previous business date as moment date object:
+
+```javascript
+//Previous busines day of Monday 02-02-2015
+moment('02-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d // Fri Jan 30 2015 00:00:00 GMT-0600 (CST)
+
+//Previous busines day of Tuesday 03-02-2015
+moment('03-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d //Mon Feb 02 2015 00:00:00 GMT-0600 (CST)
 ```
 
 **monthBusinessDays()**
