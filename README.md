@@ -31,6 +31,9 @@ moment.locale('us', {
 // moment-business-days will now stop considering these holidays as business days
 
 ````
+#### Running Tests:
+
+`npm test`
 
 ### Methods:
 
