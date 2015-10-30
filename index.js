@@ -3,18 +3,18 @@ var moment = require('moment');
 
 moment.fn.isHoliday = function () {
     var locale = this.localeData();
-    
+
     if (locale._holidays) {
-        if (locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0) return true;  
+        if (locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0) return true;
     }
-    
+
     return false;
 };
 
 moment.fn.isBusinessDay = function() {
     if (this.day() === 0 || this.day() === 6) return false;
     if (this.isHoliday()) return false;
-    return true; 
+    return true;
 };
 
 moment.fn.businessDaysIntoMonth = function () {
@@ -23,9 +23,9 @@ moment.fn.businessDaysIntoMonth = function () {
     var businessDaysIntoMonth;
     monthBusinessDays.map(function (day, index) {
         if (day.format('M/DD/YY') === businessDay.format('M/DD/YY'))
-            businessDaysIntoMonth = index + 1; 
+            businessDaysIntoMonth = index + 1;
     });
-        
+
     return businessDaysIntoMonth;
 };
 
@@ -60,7 +60,7 @@ moment.fn.businessDiff = function(param) {
 moment.fn.businessAdd = function(days) {
     var signal = days < 0 ? -1 : 1;
     days = Math.abs(days);
-    var d = this.clone().add(Math.floor(days / 5) * 7 * signal, 'd');
+    var d = this.clone();
     var remaining = days % 5;
     while (remaining) {
       d.add(signal, 'd');
