@@ -59,13 +59,12 @@ moment.fn.businessDiff = function(param) {
 
 moment.fn.businessAdd = function(days) {
     var signal = days < 0 ? -1 : 1;
-    days = Math.abs(days);
+    var daysRemaining = Math.abs(days);
     var d = this.clone();
-    var remaining = days % 5;
-    while (remaining) {
+    while (daysRemaining) {
       d.add(signal, 'd');
       if (d.isBusinessDay()) {
-        remaining--;
+        daysRemaining--;
       };
     };
     return d;
