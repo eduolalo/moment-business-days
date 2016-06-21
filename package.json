@@ -4,8 +4,8 @@
   "description": "MomentJS plugin to use business days ",
   "main": "index.js",
   "scripts": {
-    "test": "node ./test.js",
-    "mochatest": "mocha tests/*"
+    "test": "mocha tests/*",
+    "node-test": "node ./test.js"
   },
   "repository": {
     "type": "git",
