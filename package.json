@@ -1,11 +1,11 @@
 {
   "name": "moment-business-days",
   "version": "0.0.10",
-  "description": "MomentJS pluin to use business days ",
+  "description": "MomentJS plugin to use business days ",
   "main": "index.js",
   "scripts": {
-    "test": "node ./test.js",
-    "mochatest": "mocha tests/*"
+    "test": "mocha tests/*",
+    "node-test": "node ./test.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
     "pluin"
   ],
   "dependencies": {
-    "moment": "2.10.x"
+    "moment": "2.13.x"
   },
   "engine": "node >= 0.10.26",
   "author": "Christian Rodriguez Cisneros <rcchristiane@gmail.com>",

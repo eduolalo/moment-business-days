@@ -1,6 +1,6 @@
 'use strict';
 var moment = require('../index');
-var expect = require("chai").expect
+var expect = require('chai').expect
 var holidayFormat = 'MM-DD-YYYY';
 
 var resetLocale = function (done) {
