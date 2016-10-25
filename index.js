@@ -8,6 +8,14 @@ moment.fn.isHoliday = function () {
         if (locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0) return true;
     }
 
+    if (locale.holiday) {
+        if (locale.holiday(this)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     return false;
 };
 

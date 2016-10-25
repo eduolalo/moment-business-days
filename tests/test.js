@@ -34,6 +34,36 @@ describe('Moment Business Days', function () {
                 done();
             });
         });
+
+        describe('When today is a holiday determined by a function', function () {
+            var callCount = 0;
+
+            beforeEach(function (done) {
+                moment.locale('xmas', {
+                    // Every Christmas is a holiday, no matter the year
+                    holiday: function (someMoment) {
+                        callCount++;
+
+                        // Months indexed starting at 0, so December is 11.
+                        return (someMoment.month() === 11 && someMoment.date() === 25);
+                    }
+                });
+                done();
+            });
+
+            afterEach(resetLocale);
+
+            it('should be false', function (done) {
+                // In these years, Christmas was a weekday
+                expect(moment('2012-12-25').isBusinessDay()).to.be.false;
+                expect(moment('2013-12-25').isBusinessDay()).to.be.false;
+                expect(moment('2014-12-25').isBusinessDay()).to.be.false;
+                expect(moment('2015-12-25').isBusinessDay()).to.be.false;                
+                expect(callCount).to.equal(4);
+                done();
+            });
+        });
+
         describe('When today is a holiday', function () {
 
             var july4th = '07-04-2015';
