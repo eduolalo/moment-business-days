@@ -4,7 +4,7 @@ var expect = require('chai').expect
 var holidayFormat = 'MM-DD-YYYY';
 
 var resetLocale = function (done) {
-    moment.locale('us', {});
+    moment.updateLocale('us', {});
     done()
 };
 
@@ -39,7 +39,7 @@ describe('Moment Business Days', function () {
             var july4th = '07-04-2015';
 
             beforeEach(function (done) {
-                moment.locale('us', {
+                moment.updateLocale('us', {
                     holidays: [july4th],
                     holidayFormat: holidayFormat
                 });
@@ -65,7 +65,7 @@ describe('Moment Business Days', function () {
                 done();
             });
             it('should be 16 when considering labor day', function (done) {
-                moment.locale('us', {
+                moment.updateLocale('us', {
                     holidays: ['09-07-2015'],
                     holidayFormat: holidayFormat
                 });
@@ -91,7 +91,7 @@ describe('Moment Business Days', function () {
                 done();
             });
             it('adds business days only, excluding weekends and holidays, if present', function (done) {
-                moment.locale('us', {
+                moment.updateLocale('us', {
                     holidays: ['11-05-2015'],
                     holidayFormat: holidayFormat
                 });
@@ -100,7 +100,7 @@ describe('Moment Business Days', function () {
                 done();
             });
             it('adds business days only, excluding weekends and holidays, if present, even over 2 weeks', function (done) {
-                moment.locale('us', {
+                moment.updateLocale('us', {
                     holidays: ['11-05-2015', '11-12-2015'],
                     holidayFormat: holidayFormat
                 });
