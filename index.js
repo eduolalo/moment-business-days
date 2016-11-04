@@ -34,27 +34,17 @@ moment.fn.businessDiff = function(param) {
     var signal = param.unix() < this.unix()?1:-1;
     var start = moment.min(param, this).clone();
     var end = moment.max(param, this).clone();
-    var start_offset = start.day() - 7;
-    var end_offset = end.day();
+    var count = 0;
+    var maybeBizDay = start.clone();
+    
+    while ( maybeBizDay.isBefore(end) ) {
+        if (maybeBizDay.isBusinessDay() ) {
+            count++; 
+        }
+        maybeBizDay = maybeBizDay.add(1, 'days');
+    }
 
-    var end_sunday = end.clone().subtract('d', end_offset);
-    var start_sunday = start.clone().subtract('d', start_offset);
-    var weeks = end_sunday.diff(start_sunday, 'days') / 7;
-
-    start_offset = Math.abs(start_offset);
-    if (start_offset == 7) {
-      start_offset = 5;
-    } else if (start_offset == 1) {
-      start_offset = 0;
-    } else {
-      start_offset -= 2;
-    };
-
-    if (end_offset == 6) {
-      end_offset--;
-    };
-
-    return signal * (weeks * 5 + start_offset + end_offset);
+    return signal * count;
 };
 
 moment.fn.businessAdd = function(days) {
