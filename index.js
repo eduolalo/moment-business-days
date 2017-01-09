@@ -57,21 +57,24 @@ moment.fn.businessDiff = function(param) {
     return signal * (weeks * 5 + start_offset + end_offset);
 };
 
-moment.fn.businessAdd = function(days) {
-    var signal = days < 0 ? -1 : 1;
-    var daysRemaining = Math.abs(days);
-    var d = this.clone();
-    while (daysRemaining) {
-      d.add(signal, 'd');
-      if (d.isBusinessDay()) {
-        daysRemaining--;
-      };
-    };
-    return d;
+moment.fn.businessAdd = function(number, period = 'days') {
+    var day = this.clone();
+    var signal = number < 0 ? -1 : 1;
+    var remaining = Math.abs(number);
+
+    while (remaining) {
+      day.add(signal, period);
+
+      if (day.isBusinessDay()) {
+        remaining--;
+      }
+    }
+
+    return day;
 };
 
-moment.fn.businessSubtract = function(days) {
-    return this.businessAdd(-days);
+moment.fn.businessSubtract = function(number, period = 'days') {
+    return this.businessAdd(-number, period);
 };
 
 
