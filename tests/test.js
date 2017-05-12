@@ -130,4 +130,24 @@ describe('Moment Business Days', function () {
             });
         });
     });
+    describe('Business Diff', function(){
+        afterEach(resetLocale)
+            it('Should calculate number of busines days between dates', function(){
+                var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017'))
+                expect(diff).to.eql(5)
+            });
+            it('Should calculate nr of business days with custom workingdays', function(){
+                moment.locale('us',{
+                  workingWeekdays: [1,2,3,4,5,6]
+                });
+                var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017'))
+                expect(diff).to.eql(6)
+            })
+            it('Should be zero days if start and end is same', function(){
+
+                var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017'));
+                expect(diff).to.eql(0)
+            });
+
+    })
 });
