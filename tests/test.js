@@ -4,7 +4,9 @@ var expect = require('chai').expect
 var holidayFormat = 'MM-DD-YYYY';
 
 var resetLocale = function (done) {
-    moment.locale('us', {});
+    moment.locale('us', {
+      workingWeekdays: null
+    });
     done()
 };
 
@@ -34,6 +36,24 @@ describe('Moment Business Days', function () {
                 done();
             });
         });
+
+        describe('When today is custom working day', function(){
+            beforeEach(function (done) {
+              moment.locale('us',{
+                workingWeekdays: [1,2,3,4,5,6]
+              })
+              done();
+            });
+
+            afterEach(resetLocale);
+
+            it('Should be true', function (done) {
+              var saturday = moment().endOf('week')
+              expect(saturday.isBusinessDay()).to.be.true;
+              done();
+            })
+        })
+
         describe('When today is a holiday', function () {
 
             var july4th = '07-04-2015';

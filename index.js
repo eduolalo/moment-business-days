@@ -12,9 +12,14 @@ moment.fn.isHoliday = function () {
 };
 
 moment.fn.isBusinessDay = function() {
-    if (this.day() === 0 || this.day() === 6) return false;
+    var locale = this.localeData();
+    var defaultWorkingWeekdays = [1,2,3,4,5];
+    var workingWeekdays = locale._workingWeekdays || defaultWorkingWeekdays;
+
     if (this.isHoliday()) return false;
-    return true;
+    if (workingWeekdays.indexOf(this.day())>=0) return true;
+
+    return false;
 };
 
 moment.fn.businessDaysIntoMonth = function () {
