@@ -31,6 +31,20 @@ moment.locale('us', {
 // moment-business-days will now stop considering these holidays as business days
 
 ````
+#### Use localizaton to customize workingdays:
+
+````javascript
+
+var moment = require('moment-business-days');
+
+moment.locale('us', {
+   workingWeekdays: [1,2,3,4,5,6] 
+});
+
+// Specifies days form 1 to 6 as a workingday, thus monday to saturday
+// When ommiting this configuration parameter, workingdays as used based on locale default
+
+````
 #### Run Tests:
 
 `npm test`
