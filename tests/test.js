@@ -4,7 +4,9 @@ var expect = require('chai').expect
 var holidayFormat = 'MM-DD-YYYY';
 
 var resetLocale = function (done) {
-    moment.locale('us', {});
+    moment.locale('us', {
+      workingWeekdays: null
+    });
     done()
 };
 
@@ -34,6 +36,24 @@ describe('Moment Business Days', function () {
                 done();
             });
         });
+
+        describe('When today is custom working day', function(){
+            beforeEach(function (done) {
+              moment.locale('us',{
+                workingWeekdays: [1,2,3,4,5,6]
+              })
+              done();
+            });
+
+            afterEach(resetLocale);
+
+            it('Should be true', function (done) {
+              var saturday = moment().endOf('week')
+              expect(saturday.isBusinessDay()).to.be.true;
+              done();
+            })
+        })
+
         describe('When today is a holiday', function () {
 
             var july4th = '07-04-2015';
@@ -110,4 +130,24 @@ describe('Moment Business Days', function () {
             });
         });
     });
+    describe('Business Diff', function(){
+        afterEach(resetLocale)
+            it('Should calculate number of busines days between dates', function(){
+                var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017'))
+                expect(diff).to.eql(5)
+            });
+            it('Should calculate nr of business days with custom workingdays', function(){
+                moment.locale('us',{
+                  workingWeekdays: [1,2,3,4,5,6]
+                });
+                var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017'))
+                expect(diff).to.eql(6)
+            })
+            it('Should be zero days if start and end is same', function(){
+
+                var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017'));
+                expect(diff).to.eql(0)
+            });
+
+    })
 });
