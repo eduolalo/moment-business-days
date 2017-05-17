@@ -129,7 +129,7 @@ describe('Moment Business Days', function () {
 
         afterEach(resetLocale);
 
-        describe('On Tuesday, Novemeber 3rd 2015', function () {
+        describe('On Tuesday, November 3rd 2015', function () {
             it('adds business days only, excluding weekends, even over 2 weeks ', function (done) {
                 var newBusinessDay = moment('11-03-2015', 'MM-DD-YYYY').businessAdd(5);
                 expect(newBusinessDay.format('D')).to.eql('10');
@@ -138,6 +138,11 @@ describe('Moment Business Days', function () {
             it('adds business days only, excluding weekends ', function (done) {
                 var newBusinessDay = moment('11-03-2015', 'MM-DD-YYYY').businessAdd(10);
                 expect(newBusinessDay.format('D')).to.eql('17');
+                done();
+            });
+            it('adds business hours only, excluding weekends ', function (done) {
+                var newBusinessDay = moment('11-06-2015', 'MM-DD-YYYY').businessAdd(36, 'hours');
+                expect(newBusinessDay.format('D')).to.eql('9');
                 done();
             });
             it('adds business days only, excluding weekends and holidays, if present', function (done) {
