@@ -109,10 +109,10 @@ moment.fn.prevBusinessDay = function() {
     return this;
 };
 
-moment.fn.monthBusinessDays = function() {
+moment.fn.monthBusinessDays = function(partialEndDate) {
     var me = this.clone();
     var day = me.clone().startOf('month');
-    var end = me.clone().endOf('month');
+    var end = partialEndDate ? partialEndDate : me.clone().endOf('month');
     var daysArr = [];
     var done = false;
     while (!done) {
