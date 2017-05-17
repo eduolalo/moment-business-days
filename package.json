@@ -19,7 +19,7 @@
     "pluin"
   ],
   "dependencies": {
-    "moment": "2.13.x"
+    "moment": "^2.18.1"
   },
   "engine": "node >= 0.10.26",
   "author": "Christian Rodriguez Cisneros <rcchristiane@gmail.com>",
@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/kalmecak/moment-business-days",
   "devDependencies": {
-    "chai": "^3.3.0",
-    "mocha": "^2.3.3"
+    "chai": "^3.5.0",
+    "mocha": "^3.4.1"
   }
 }
