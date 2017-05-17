@@ -30,10 +30,10 @@ moment.fn.businessDaysIntoMonth = function () {
     var monthBusinessDays = businessDay.monthBusinessDays();
     var businessDaysIntoMonth;
     monthBusinessDays.map(function (day, index) {
-        if (day.format('M/DD/YY') === businessDay.format('M/DD/YY'))
+        if (day.format('M/DD/YY') === businessDay.format('M/DD/YY')) {
             businessDaysIntoMonth = index + 1;
-    });
-
+        }
+    })
     return businessDaysIntoMonth;
 };
 
