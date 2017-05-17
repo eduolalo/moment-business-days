@@ -5,10 +5,12 @@ var holidayFormat = 'MM-DD-YYYY';
 
 var resetLocale = function (done) {
     moment.updateLocale('us', {});
-    done()
+    done();
 };
 
 describe('Moment Business Days', function () {
+    
+    afterEach(resetLocale);
     describe('.prevBusinessDay', function () {
         describe('When today is Monday', function () {
             it('should be Friday', function (done) {
@@ -33,6 +35,7 @@ describe('Moment Business Days', function () {
                 expect(sunday.isBusinessDay()).to.be.false;
                 done();
             });
+
         });
 
         describe('When today is a holiday determined by a function', function () {
@@ -64,6 +67,19 @@ describe('Moment Business Days', function () {
             });
         });
 
+        describe('When today is custom working day', function(){
+            beforeEach(function (done) {
+              moment.updateLocale('us',{
+                workingWeekdays: [1,2,3,4,5,6]
+              })
+              done();
+            })
+            it('Should be true', function (done) {
+              var saturday = moment().endOf('week')
+              expect(saturday.isBusinessDay()).to.be.true;
+              done();
+            })
+        });
         describe('When today is a holiday', function () {
 
             var july4th = '07-04-2015';
@@ -87,9 +103,13 @@ describe('Moment Business Days', function () {
     describe('.businessDaysIntoMonth', function () {
 
         afterEach(resetLocale);
-
+        
         describe('On Wednesday, September 23rd 2015', function () {
             it('should be 17 when there are no holidays', function (done) {
+                
+                moment.updateLocale('us',{
+                    workingWeekdays: null
+                });
                 var businessDaysIntoMonth = moment('09-23-2015', 'MM-DD-YYYY').businessDaysIntoMonth();
                 expect(businessDaysIntoMonth).to.eql(17);
                 done();
@@ -140,4 +160,24 @@ describe('Moment Business Days', function () {
             });
         });
     });
+    describe('Business Diff', function(){
+        afterEach(resetLocale)
+            it('Should calculate number of busines days between dates', function(){
+                var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','MM-DD-YYYY'))
+                expect(diff).to.eql(5)
+            });
+            it('Should calculate nr of business days with custom workingdays', function(){
+                moment.updateLocale('us',{
+                  workingWeekdays: [1,2,3,4,5,6]
+                });
+                var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','MM-DD-YYYY'))
+                expect(diff).to.eql(6)
+            })
+            it('Should be zero days if start and end is same', function(){
+
+                var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017', 'MM-DD-YYYY'));
+                expect(diff).to.eql(0)
+            });
+
+    })
 });
