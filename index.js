@@ -1,5 +1,8 @@
 'use strict';
-var moment = require('moment');
+
+if (typeof window === 'undefined') {
+    var moment = require('moment');
+}
 
 moment.fn.isHoliday = function () {
     var locale = this.localeData();
@@ -8,13 +11,26 @@ moment.fn.isHoliday = function () {
         if (locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0) return true;
     }
 
+    if (locale.holiday) {
+        if (locale.holiday(this)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     return false;
 };
 
 moment.fn.isBusinessDay = function() {
-    if (this.day() === 0 || this.day() === 6) return false;
+    var locale = this.localeData();
+    var defaultWorkingWeekdays = [1,2,3,4,5];
+    var workingWeekdays = locale._workingWeekdays || defaultWorkingWeekdays;
+
     if (this.isHoliday()) return false;
-    return true;
+    if (workingWeekdays.indexOf(this.day())>=0) return true;
+
+    return false;
 };
 
 moment.fn.businessDaysIntoMonth = function () {
@@ -22,56 +38,50 @@ moment.fn.businessDaysIntoMonth = function () {
     var monthBusinessDays = businessDay.monthBusinessDays();
     var businessDaysIntoMonth;
     monthBusinessDays.map(function (day, index) {
-        if (day.format('M/DD/YY') === businessDay.format('M/DD/YY'))
+        if (day.format('M/DD/YY') === businessDay.format('M/DD/YY')) {
             businessDaysIntoMonth = index + 1;
-    });
-
+        }
+    })
     return businessDaysIntoMonth;
 };
 
 moment.fn.businessDiff = function(param) {
-    param = moment(param);
-    var signal = param.unix() < this.unix()?1:-1;
-    var start = moment.min(param, this).clone();
-    var end = moment.max(param, this).clone();
-    var start_offset = start.day() - 7;
-    var end_offset = end.day();
+    var end = this.clone();
+    var start = moment(param);
+    var daysBetween = 0;
 
-    var end_sunday = end.clone().subtract('d', end_offset);
-    var start_sunday = start.clone().subtract('d', start_offset);
-    var weeks = end_sunday.diff(start_sunday, 'days') / 7;
+    if(start === end){
+        return daysBetween;
+    }
 
-    start_offset = Math.abs(start_offset);
-    if (start_offset == 7) {
-      start_offset = 5;
-    } else if (start_offset == 1) {
-      start_offset = 0;
-    } else {
-      start_offset -= 2;
-    };
+    while (start < end){
+        if(this.isBusinessDay(start)){
+            daysBetween++;
+        }
+        start = start.businessAdd(1)
+    }
 
-    if (end_offset == 6) {
-      end_offset--;
-    };
-
-    return signal * (weeks * 5 + start_offset + end_offset);
+    return daysBetween;
 };
 
-moment.fn.businessAdd = function(days) {
-    var signal = days < 0 ? -1 : 1;
-    var daysRemaining = Math.abs(days);
-    var d = this.clone();
-    while (daysRemaining) {
-      d.add(signal, 'd');
-      if (d.isBusinessDay()) {
-        daysRemaining--;
-      };
-    };
-    return d;
+moment.fn.businessAdd = function(number, period = 'days') {
+    var day = this.clone();
+    var signal = number < 0 ? -1 : 1;
+    var remaining = Math.abs(number);
+
+    while (remaining) {
+      day.add(signal, period);
+
+      if (day.isBusinessDay()) {
+        remaining--;
+      }
+    }
+
+    return day;
 };
 
-moment.fn.businessSubtract = function(days) {
-    return this.businessAdd(-days);
+moment.fn.businessSubtract = function(number, period = 'days') {
+    return this.businessAdd(-number, period);
 };
 
 
@@ -99,10 +109,10 @@ moment.fn.prevBusinessDay = function() {
     return this;
 };
 
-moment.fn.monthBusinessDays = function() {
+moment.fn.monthBusinessDays = function(partialEndDate) {
     var me = this.clone();
     var day = me.clone().startOf('month');
-    var end = me.clone().endOf('month');
+    var end = partialEndDate ? partialEndDate : me.clone().endOf('month');
     var daysArr = [];
     var done = false;
     while (!done) {
@@ -181,4 +191,6 @@ moment.fn.monthNaturalWeeks = function(fromToday) {
     return weeksArr;
 };
 
-module.exports = moment;
+if (typeof module != 'undefined' && module.exports) {
+    module.exports = moment;
+}
