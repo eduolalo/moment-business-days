@@ -18,8 +18,8 @@
     "days",
     "pluin"
   ],
-  "dependencies": {
-    "moment": "^2.18.1"
+  "peerDependencies": {
+    "moment": "2.x.x"
   },
   "engine": "node >= 0.10.26",
   "author": "Christian Rodriguez Cisneros <rcchristiane@gmail.com>",
