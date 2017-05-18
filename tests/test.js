@@ -133,8 +133,12 @@ describe('Moment Business Days', function () {
     describe('Business Diff', function(){
         afterEach(resetLocale)
             it('Should calculate number of busines days between dates', function(){
-                var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017'))
-                expect(diff).to.eql(5)
+                var diff = moment('05-31-2017', 'MM-DD-YYYY').businessDiff(moment('05-01-2017', 'MM-DD-YYYY'))
+                expect(diff).to.eql(22)
+            });
+            it('... and in reverse order ', function(){
+                var diff = moment('05-01-2017').businessDiff(moment('2017-05-31 00:00:00'))
+                expect(diff).to.eql(22)
             });
             it('Should calculate nr of business days with custom workingdays', function(){
                 moment.locale('us',{
@@ -142,7 +146,14 @@ describe('Moment Business Days', function () {
                 });
                 var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017'))
                 expect(diff).to.eql(6)
-            })
+            });
+            it('Should calculate nr of business with all working days', function(){
+                moment.locale('us',{
+                  workingWeekdays: [0,1,2,3,4,5,6]
+                });
+                var diff = moment('06-18-2017', 'MM-DD-YYYY').businessDiff(moment('05-18-2017'))
+                expect(diff).to.eql(31)
+            });
             it('Should be zero days if start and end is same', function(){
 
                 var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017'));
