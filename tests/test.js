@@ -171,6 +171,10 @@ describe('Moment Business Days', function () {
                 var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','MM-DD-YYYY'))
                 expect(diff).to.eql(5)
             });
+            it('...and in reverse order', function(){
+                var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(moment('05-15-2017','MM-DD-YYYY'))
+                expect(diff).to.eql(5)
+            });
             it('Should calculate nr of business days with custom workingdays', function(){
                 moment.updateLocale('us',{
                   workingWeekdays: [1,2,3,4,5,6]

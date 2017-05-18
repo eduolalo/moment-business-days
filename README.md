@@ -51,14 +51,6 @@ moment.locale('us', {
 
 ### Methods:
 
-**businessDiff(date)**
-
-Will calculate number of business days between dates.
-````javascript
-var diff = moment('05-01-2017').businessDiff(moment('2017-05-31 00:00:00'))
-// businessDiff paremeter must be an moment object.
-
-````
 
 **businessAdd(days)**
 
