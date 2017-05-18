@@ -45,23 +45,26 @@ moment.fn.businessDaysIntoMonth = function () {
     return businessDaysIntoMonth;
 };
 
-moment.fn.businessDiff = function(param) {
-    var end = this.clone();
-    var start = moment(param);
-    var daysBetween = 0;
+moment.fn.businessDiff = function (param) {
+  var d1 = this.clone();
+  var d2 = param.clone();
+  var start = d1 < d2 ? d1 : d2;
+  var end = d2 > d1 ? d2 : d1;
 
-    if(start === end){
-        return daysBetween;
-    }
+  var daysBetween = 0;
 
-    while (start < end){
-        if(this.isBusinessDay(start)){
-            daysBetween++;
-        }
-        start = start.businessAdd(1)
-    }
-
+  if (start === end) {
     return daysBetween;
+  }
+
+  while (start < end) {
+    if (start.isBusinessDay()) {
+      daysBetween++;
+    }
+    start.add(1, 'd')
+  }
+
+  return daysBetween;
 };
 
 moment.fn.businessAdd = function(number, period = 'days') {

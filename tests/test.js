@@ -9,7 +9,7 @@ var resetLocale = function (done) {
 };
 
 describe('Moment Business Days', function () {
-    
+
     afterEach(resetLocale);
     describe('.prevBusinessDay', function () {
         describe('When today is Monday', function () {
@@ -61,7 +61,7 @@ describe('Moment Business Days', function () {
                 expect(moment('2012-12-25').isBusinessDay()).to.be.false;
                 expect(moment('2013-12-25').isBusinessDay()).to.be.false;
                 expect(moment('2014-12-25').isBusinessDay()).to.be.false;
-                expect(moment('2015-12-25').isBusinessDay()).to.be.false;                
+                expect(moment('2015-12-25').isBusinessDay()).to.be.false;
                 expect(callCount).to.equal(4);
                 done();
             });
@@ -103,10 +103,10 @@ describe('Moment Business Days', function () {
     describe('.businessDaysIntoMonth', function () {
 
         afterEach(resetLocale);
-        
+
         describe('On Wednesday, September 23rd 2015', function () {
             it('should be 17 when there are no holidays', function (done) {
-                
+
                 moment.updateLocale('us',{
                     workingWeekdays: null
                 });
@@ -171,13 +171,24 @@ describe('Moment Business Days', function () {
                 var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','MM-DD-YYYY'))
                 expect(diff).to.eql(5)
             });
+            it('...and in reverse order', function(){
+                var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(moment('05-15-2017','MM-DD-YYYY'))
+                expect(diff).to.eql(5)
+            });
             it('Should calculate nr of business days with custom workingdays', function(){
                 moment.updateLocale('us',{
                   workingWeekdays: [1,2,3,4,5,6]
                 });
                 var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','MM-DD-YYYY'))
                 expect(diff).to.eql(6)
-            })
+            });
+            it('Should calculate nr of business with all working days', function(){
+                moment.locale('us',{
+                  workingWeekdays: [0,1,2,3,4,5,6]
+                });
+                var diff = moment('06-18-2017', 'MM-DD-YYYY').businessDiff(moment('05-18-2017'))
+                expect(diff).to.eql(31)
+            });
             it('Should be zero days if start and end is same', function(){
 
                 var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017', 'MM-DD-YYYY'));
