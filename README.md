@@ -175,3 +175,13 @@ moment('01-01-2015', 'DD-MM-YYYY').monthBusinessWeeks()
 It's like monthBusinessWeeks(), but this method will include weekends on it's response.
 
 The objects returned by functions are momentjs objects (**except isBusinessDay**) so you can handle it with moment native functions.
+
+**businessDiff()**
+
+Calculate number of busines days between dates.
+
+```javascript
+
+var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','MM-DD-YYYY'));
+// diff = 5
+/*
