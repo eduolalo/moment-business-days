@@ -2,15 +2,34 @@
 This is a momentJS plugin that allows you to use only business days (Monday to Friday).
 
 **NOTES:**
-* This plugin is for using in NodeJS
+* This plugin works on server and cliet side.
 * This plugin is based in [this repo](http://goo.gl/i9m4gJ)
+* All contributions are welcome.
+* **Thaks to the contributors for making this plugin better!!**
 
+### Install:
+
+````
+// For NodeJS
+$ npm install moment-business-days
+// or install and save on packaje.json
+$ npm install moment-business-days -S
+
+// For bower
+$ bower install moment-business-days
+
+````
 ### How to use:
 
 ````javascript
-
+// NodeJS
 var moment = require('moment-business-days');
 // You'll be able use moment as you normally do
+
+// Browser
+// Add after moment.js library
+<script src="moment.js"></script>
+<script src="moment-business-days.js"></script>
 
 ````
 
