@@ -1,8 +1,10 @@
 'use strict';
 
+
 if (typeof require === 'function') {
     var moment = require('moment');
 }
+
 
 moment.fn.isHoliday = function () {
     var locale = this.localeData();
