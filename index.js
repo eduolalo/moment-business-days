@@ -1,6 +1,6 @@
 'use strict';
 
-if (typeof window === 'undefined') {
+if (typeof require === 'function') {
     var moment = require('moment');
 }
 
