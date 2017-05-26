@@ -1,9 +1,12 @@
 'use strict';
 
-var momentLib = (typeof window === 'undefined') ? require('moment') : moment;
+
+if (typeof require === 'function') {
+    var moment = require('moment');
+}
 
 
-momentLib.fn.isHoliday = function () {
+moment.fn.isHoliday = function () {
     var locale = this.localeData();
 
     if (locale._holidays) {
@@ -21,7 +24,7 @@ momentLib.fn.isHoliday = function () {
     return false;
 };
 
-momentLib.fn.isBusinessDay = function() {
+moment.fn.isBusinessDay = function() {
     var locale = this.localeData();
     var defaultWorkingWeekdays = [1,2,3,4,5];
     var workingWeekdays = locale._workingWeekdays || defaultWorkingWeekdays;
@@ -32,7 +35,7 @@ momentLib.fn.isBusinessDay = function() {
     return false;
 };
 
-momentLib.fn.businessDaysIntoMonth = function () {
+moment.fn.businessDaysIntoMonth = function () {
     var businessDay = this.isBusinessDay() ? this : this.prevBusinessDay();
     var monthBusinessDays = businessDay.monthBusinessDays();
     var businessDaysIntoMonth;
@@ -44,7 +47,7 @@ momentLib.fn.businessDaysIntoMonth = function () {
     return businessDaysIntoMonth;
 };
 
-momentLib.fn.businessDiff = function (param) {
+moment.fn.businessDiff = function (param) {
   var d1 = this.clone();
   var d2 = param.clone();
   var start = d1 < d2 ? d1 : d2;
@@ -66,7 +69,7 @@ momentLib.fn.businessDiff = function (param) {
   return daysBetween;
 };
 
-momentLib.fn.businessAdd = function(number, period = 'days') {
+moment.fn.businessAdd = function(number, period = 'days') {
     var day = this.clone();
     var signal = number < 0 ? -1 : 1;
     var remaining = Math.abs(number);
@@ -82,12 +85,12 @@ momentLib.fn.businessAdd = function(number, period = 'days') {
     return day;
 };
 
-momentLib.fn.businessSubtract = function(number, period = 'days') {
+moment.fn.businessSubtract = function(number, period = 'days') {
     return this.businessAdd(-number, period);
 };
 
 
-momentLib.fn.nextBusinessDay = function() {
+moment.fn.nextBusinessDay = function() {
     var loop = 1;
     var limit = 7;
     while (loop < limit) {
@@ -99,7 +102,7 @@ momentLib.fn.nextBusinessDay = function() {
     return this;
 };
 
-momentLib.fn.prevBusinessDay = function() {
+moment.fn.prevBusinessDay = function() {
     var loop = 1;
     var limit = 7;
     while (loop < limit) {
@@ -111,7 +114,7 @@ momentLib.fn.prevBusinessDay = function() {
     return this;
 };
 
-momentLib.fn.monthBusinessDays = function(partialEndDate) {
+moment.fn.monthBusinessDays = function(partialEndDate) {
     var me = this.clone();
     var day = me.clone().startOf('month');
     var end = partialEndDate ? partialEndDate : me.clone().endOf('month');
@@ -128,7 +131,7 @@ momentLib.fn.monthBusinessDays = function(partialEndDate) {
     return daysArr;
 };
 
-momentLib.fn.monthNaturalDays = function(fromToday) {
+moment.fn.monthNaturalDays = function(fromToday) {
     var me = this.clone();
     var day = fromToday ? me.clone() : me.clone().startOf('month');
     var end = me.clone().endOf('month');
@@ -143,7 +146,7 @@ momentLib.fn.monthNaturalDays = function(fromToday) {
     return daysArr;
 };
 
-momentLib.fn.monthBusinessWeeks = function(fromToday) {
+moment.fn.monthBusinessWeeks = function(fromToday) {
     var me = this.clone();
     var day = fromToday ? me.clone() : me.clone().startOf('month');
     var end = me.clone().endOf('month');
@@ -169,7 +172,7 @@ momentLib.fn.monthBusinessWeeks = function(fromToday) {
     return weeksArr;
 };
 
-momentLib.fn.monthNaturalWeeks = function(fromToday) {
+moment.fn.monthNaturalWeeks = function(fromToday) {
     var me = this.clone();
     var day = fromToday ? me.clone() : me.clone().startOf('month');
     var end = me.clone().endOf('month');
@@ -194,5 +197,5 @@ momentLib.fn.monthNaturalWeeks = function(fromToday) {
 };
 
 if (typeof module != 'undefined' && module.exports) {
-    module.exports = momentLib;
+    module.exports = moment;
 }
