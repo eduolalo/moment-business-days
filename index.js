@@ -69,10 +69,11 @@ moment.fn.businessDiff = function (param) {
   return daysBetween;
 };
 
-moment.fn.businessAdd = function(number, period = 'days') {
+moment.fn.businessAdd = function(number, period) {
     var day = this.clone();
     var signal = number < 0 ? -1 : 1;
     var remaining = Math.abs(number);
+    period = (typeof period !== 'undefined') ? period : 'days';
 
     while (remaining) {
       day.add(signal, period);
@@ -85,7 +86,7 @@ moment.fn.businessAdd = function(number, period = 'days') {
     return day;
 };
 
-moment.fn.businessSubtract = function(number, period = 'days') {
+moment.fn.businessSubtract = function(number, period) {
     return this.businessAdd(-number, period);
 };
 
