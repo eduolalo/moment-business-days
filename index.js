@@ -59,7 +59,7 @@ moment.fn.businessDiff = function (param) {
     return daysBetween;
   }
 
-  while (start < end) {
+  while (start <= end) {
     if (start.isBusinessDay()) {
       daysBetween++;
     }
