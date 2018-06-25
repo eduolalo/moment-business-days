@@ -3,6 +3,7 @@
   "version": "1.0.6",
   "description": "MomentJS plugin to use business days ",
   "main": "index.js",
+  "types": "./index.d.ts",
   "scripts": {
     "test": "mocha tests/*",
     "node-test": "node ./test.js"
@@ -30,6 +31,7 @@
   "homepage": "https://github.com/kalmecak/moment-business-days",
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.4.1"
+    "mocha": "^3.4.1",
+    "moment": "2.x.x"
   }
 }
