@@ -2,7 +2,7 @@
 This is a momentJS plugin that allows you to use only business days (Monday to Friday).
 
 **NOTES:**
-* This plugin works on server and cliet side.
+* This plugin works on server and client side.
 * This plugin is based in [this repo](http://goo.gl/i9m4gJ)
 * All contributions are welcome.
 * **Thaks to the contributors for making this plugin better!!**
@@ -12,7 +12,7 @@ This is a momentJS plugin that allows you to use only business days (Monday to F
 ````
 // For NodeJS
 $ npm install moment-business-days
-// or install and save on packaje.json
+// or install and save on package.json
 $ npm install moment-business-days -S
 
 // For bower
@@ -33,7 +33,7 @@ var moment = require('moment-business-days');
 
 ````
 
-#### Use localizaton to configure holidays:
+#### Use localization to configure holidays:
 
 ````javascript
 
@@ -50,7 +50,7 @@ moment.locale('us', {
 // moment-business-days will now stop considering these holidays as business days
 
 ````
-#### Use localizaton to customize workingdays:
+#### Use localization to customize working days:
 
 ````javascript
 
@@ -60,8 +60,8 @@ moment.locale('us', {
    workingWeekdays: [1,2,3,4,5,6] 
 });
 
-// Specifies days form 1 to 6 as a workingday, thus monday to saturday
-// When ommiting this configuration parameter, workingdays as used based on locale default
+// Specifies days form 1 to 6 as a workingday, thus Monday to Saturday
+// When omitting this configuration parameter, workingdays as used based on locale default
 
 ````
 #### Run Tests:
@@ -97,7 +97,7 @@ Check if the date is a business day and return  **true**/**false**:
 // 31-01-2015 is Saturday
 moment('31-01-2015', 'DD-MM-YYYY').isBusinessDay() // false
 
-// 30-01-2015 is Fridat
+// 30-01-2015 is Friday
 moment('30-01-2015', 'DD-MM-YYYY').isBusinessDay() // true
 ```
 
@@ -106,10 +106,10 @@ moment('30-01-2015', 'DD-MM-YYYY').isBusinessDay() // true
 Will retrieve the next business date as moment date object:
 
 ```javascript
-//Next busines day of Friday 30-01-2015
+//Next business day of Friday 30-01-2015
 moment('30-01-2015', 'DD-MM-YYYY').nextBusinessDay()._d // Mon Feb 02 2015 00:00:00 GMT-0600 (CST)
 
-//Next busines day of Monday 02-02-2015
+//Next business day of Monday 02-02-2015
 moment('02-02-2015', 'DD-MM-YYYY').nextBusinessDay()._d //Tue Feb 03 2015 00:00:00 GMT-0600 (CST)
 ```
 
@@ -118,10 +118,10 @@ moment('02-02-2015', 'DD-MM-YYYY').nextBusinessDay()._d //Tue Feb 03 2015 00:00:
 Will retrieve the previous business date as moment date object:
 
 ```javascript
-//Previous busines day of Monday 02-02-2015
+//Previous business day of Monday 02-02-2015
 moment('02-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d // Fri Jan 30 2015 00:00:00 GMT-0600 (CST)
 
-//Previous busines day of Tuesday 03-02-2015
+//Previous business day of Tuesday 03-02-2015
 moment('03-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d //Mon Feb 02 2015 00:00:00 GMT-0600 (CST)
 ```
 
@@ -158,7 +158,7 @@ Is like monthBusinessDays(), but this method will include the weekends on it's r
 Retrieve an array of arrays, these arrays are the representation of a business weeks and each week (array) have it own business days (Monday to Friday). There could be the case that one week (array) have less than 5 days, this is because the month started on the middle of the week, for example: the first week of January 2015 just have two days, Thursday 1st and Friday 2nd. **Each day in the week arrays are moment objects.**
 
 ```javascript
-//Busines weeks in month January 2015
+// Business weeks in month January 2015
 moment('01-01-2015', 'DD-MM-YYYY').monthBusinessWeeks()
 
 /*
@@ -189,7 +189,7 @@ The objects returned by functions are momentjs objects (**except isBusinessDay**
 
 **businessDiff()**
 
-Calculate number of busines days between dates.
+Calculate number of business days between dates.
 
 ```javascript
 
