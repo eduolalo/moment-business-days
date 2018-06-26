@@ -9,19 +9,6 @@ being counted as business days, for example **national holidays**.
 * All contributions are welcome.
 * **Thaks to the contributors for making this plugin better!!**
 
-## Setup
-
-````
-// For Node.js
-$ npm install moment-business-days
-
-// ...or install and save in package.json
-$ npm install --save moment-business-days
-
-// For bower
-$ bower install moment-business-days
-````
-
 ## Usage
 
 ````javascript
@@ -68,13 +55,7 @@ moment.locale('us', {
 // When omitting this configuration parameter, business days are based on locale default
 ````
 
-## Run Tests
-
-````
-npm test
-````
-
-## Documentation
+## API
 
 The objects returned by methods are **Moment.js** objects (except `.isBusinessDay()` and `.businessDiff()`) so you can
 handle them with **Moment.js** native methods.
@@ -205,3 +186,22 @@ moment('01-01-2015', 'DD-MM-YYYY').monthBusinessWeeks()
 #### `.monthNaturalWeeks()` => Moment[][]
 
 It's like `.monthBusinessWeeks()`, but this method will include weekends in it's response.
+
+## Installation
+
+````
+// For Node.js
+$ npm install moment-business-days
+
+// ...or install and save in package.json
+$ npm install --save moment-business-days
+
+// For bower
+$ bower install moment-business-days
+````
+
+## Testing
+
+````
+npm test
+````
