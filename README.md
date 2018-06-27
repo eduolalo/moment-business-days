@@ -42,7 +42,7 @@ var moment = require('moment-business-days');
 var july4th = '07-04-2015';
 var laborDay = '09-07-2015';
 
-moment.locale('us', {
+moment.updateLocale('us', {
    holidays: [july4th, laborDay],
    holidayFormat: 'MM-DD-YYYY' 
 });
@@ -56,8 +56,8 @@ moment.locale('us', {
 
 var moment = require('moment-business-days');
 
-moment.locale('us', {
-   workingWeekdays: [1,2,3,4,5,6] 
+moment.updateLocale('us', {
+   workingWeekdays: [1, 2, 3, 4, 5, 6] 
 });
 
 // Specifies days form 1 to 6 as a workingday, thus Monday to Saturday
