@@ -34,9 +34,9 @@ var moment = require('moment-business-days');
 var july4th = '07-04-2015';
 var laborDay = '09-07-2015';
 
-moment.locale('us', {
+moment.updateLocale('us', {
    holidays: [july4th, laborDay],
-   holidayFormat: 'MM-DD-YYYY' 
+   holidayFormat: 'MM-DD-YYYY'
 });
 
 // moment-business-days will now stop considering these holidays as business days
@@ -47,8 +47,8 @@ moment.locale('us', {
 ````javascript
 var moment = require('moment-business-days');
 
-moment.locale('us', {
-   workingWeekdays: [1,2,3,4,5,6] 
+moment.updateLocale('us', {
+   workingWeekdays: [1, 2, 3, 4, 5, 6]
 });
 
 // Defines days from 1 (Monday) to 6 (Saturday) as business days. Note that Sunday is day 0.
@@ -169,7 +169,7 @@ moment('01-01-2015', 'DD-MM-YYYY').monthBusinessWeeks()
       _isUTC: false,
       _pf: [...],
       _locale: [...],
-      _d: Thu Jan 01 2015 00:00:00 GMT-0600 (CST) 
+      _d: Thu Jan 01 2015 00:00:00 GMT-0600 (CST)
     }, { _isAMomentObject: true,
       _i: '01-01-2015',
       _f: 'DD-MM-YYYY',
