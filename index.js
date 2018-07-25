@@ -34,6 +34,9 @@ moment.fn.isBusinessDay = function () {
 };
 
 moment.fn.businessDaysIntoMonth = function () {
+  if (!this.isValid()) {
+    return NaN;
+  }
   var businessDay = this.isBusinessDay() ? this : this.prevBusinessDay();
   var monthBusinessDays = businessDay.monthBusinessDays();
   var businessDaysIntoMonth;

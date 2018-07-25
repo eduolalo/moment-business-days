@@ -104,6 +104,13 @@ describe('Moment Business Days', function () {
   describe('.businessDaysIntoMonth', function () {
     afterEach(resetLocale);
 
+    describe('When moment object is invalid', function () {
+      it('should return NaN', function (done) {
+        var businessDaysIntoMonth = moment(null).businessDaysIntoMonth();
+        expect(businessDaysIntoMonth).to.be.NaN;
+        done();
+      });
+    });
     describe('On Wednesday, September 23rd 2015', function () {
       it('should be 17 when there are no holidays', function (done) {
         moment.updateLocale('us', {
