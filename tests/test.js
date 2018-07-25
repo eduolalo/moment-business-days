@@ -105,10 +105,9 @@ describe('Moment Business Days', function () {
     afterEach(resetLocale);
 
     describe('When moment object is invalid', function () {
-      it('should return NaN', function (done) {
+      it('should return NaN', function () {
         var businessDaysIntoMonth = moment(null).businessDaysIntoMonth();
         expect(businessDaysIntoMonth).to.be.NaN;
-        done();
       });
     });
     describe('On Wednesday, September 23rd 2015', function () {
@@ -141,7 +140,7 @@ describe('Moment Business Days', function () {
     afterEach(resetLocale);
 
     describe('When moment object is invalid', function () {
-      it('should return a new invalid moment object', function (done) {
+      it('should return a new invalid moment object', function () {
         var originalMoment = moment(null);
         var newBusinessDay = originalMoment.businessAdd(3);
         // Deepy equal but not strictly equal
@@ -149,7 +148,6 @@ describe('Moment Business Days', function () {
         expect(originalMoment).not.equal(newBusinessDay);
         // New moment object should also be invalid
         expect(newBusinessDay.isValid()).to.be.false;
-        done();
       });
     });
     describe('On Tuesday, November 3rd 2015', function () {
@@ -232,25 +230,21 @@ describe('Moment Business Days', function () {
   });
   describe('Aggregate functions return empty array on invalid object', function () {
     afterEach(resetLocale);
-    it('Should return empty array on .monthBusinessDays', function (done) {
+    it('Should return empty array on .monthBusinessDays', function () {
       var monthBusinessDays = moment(null).monthBusinessDays();
       expect(monthBusinessDays).to.be.an('array').that.is.empty;
-      done();
     });
-    it('Should return empty array on .monthNaturalDays', function (done) {
+    it('Should return empty array on .monthNaturalDays', function () {
       var monthNaturalDays = moment(null).monthNaturalDays();
       expect(monthNaturalDays).to.be.an('array').that.is.empty;
-      done();
     });
-    it('Should return empty array on .monthBusinessWeeks', function (done) {
+    it('Should return empty array on .monthBusinessWeeks', function () {
       var monthBusinessWeeks = moment(null).monthBusinessWeeks();
       expect(monthBusinessWeeks).to.be.an('array').that.is.empty;
-      done();
     });
-    it('Should return empty array on .monthNaturalWeeks', function (done) {
+    it('Should return empty array on .monthNaturalWeeks', function () {
       var monthNaturalWeeks = moment(null).monthNaturalWeeks();
       expect(monthNaturalWeeks).to.be.an('array').that.is.empty;
-      done();
     });
   });
 });
