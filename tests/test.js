@@ -200,7 +200,7 @@ describe('Moment Business Days', function () {
         workingWeekdays: [0, 1, 2, 3, 4, 5, 6]
       });
       var diff = moment('06-18-2017', 'MM-DD-YYYY').businessDiff(
-        moment('05-18-2017')
+        moment('05-18-2017', 'MM-DD-YYYY')
       );
       expect(diff).to.eql(31);
     });
