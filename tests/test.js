@@ -230,4 +230,27 @@ describe('Moment Business Days', function () {
       expect(diff).to.eql(0);
     });
   });
+  describe('Aggregate functions return empty array on invalid object', function () {
+    afterEach(resetLocale);
+    it('Should return empty array on .monthBusinessDays', function (done) {
+      var monthBusinessDays = moment(null).monthBusinessDays();
+      expect(monthBusinessDays).to.be.an('array').that.is.empty;
+      done();
+    });
+    it('Should return empty array on .monthNaturalDays', function (done) {
+      var monthNaturalDays = moment(null).monthNaturalDays();
+      expect(monthNaturalDays).to.be.an('array').that.is.empty;
+      done();
+    });
+    it('Should return empty array on .monthBusinessWeeks', function (done) {
+      var monthBusinessWeeks = moment(null).monthBusinessWeeks();
+      expect(monthBusinessWeeks).to.be.an('array').that.is.empty;
+      done();
+    });
+    it('Should return empty array on .monthNaturalWeeks', function (done) {
+      var monthNaturalWeeks = moment(null).monthNaturalWeeks();
+      expect(monthNaturalWeeks).to.be.an('array').that.is.empty;
+      done();
+    });
+  });
 });
