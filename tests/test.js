@@ -140,6 +140,18 @@ describe('Moment Business Days', function () {
   describe('.businessAdd', function () {
     afterEach(resetLocale);
 
+    describe('When moment object is invalid', function () {
+      it('should return a new invalid moment object', function (done) {
+        var originalMoment = moment(null);
+        var newBusinessDay = originalMoment.businessAdd(3);
+        // Deepy equal but not strictly equal
+        expect(originalMoment).to.eql(newBusinessDay);
+        expect(originalMoment).not.equal(newBusinessDay);
+        // New moment object should also be invalid
+        expect(newBusinessDay.isValid()).to.be.false;
+        done();
+      });
+    });
     describe('On Tuesday, November 3rd 2015', function () {
       it('adds business days only, excluding weekends, even over 2 weeks ', function (done) {
         var newBusinessDay = moment('11-03-2015', 'MM-DD-YYYY').businessAdd(5);

@@ -72,6 +72,9 @@ moment.fn.businessDiff = function (param) {
 
 moment.fn.businessAdd = function (number, period) {
   var day = this.clone();
+  if (!day.isValid()) {
+    return day;
+  }
   var signal = number < 0 ? -1 : 1;
   var remaining = Math.abs(number);
   period = typeof period !== 'undefined' ? period : 'days';
