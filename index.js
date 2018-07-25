@@ -34,6 +34,9 @@ moment.fn.isBusinessDay = function () {
 };
 
 moment.fn.businessDaysIntoMonth = function () {
+  if (!this.isValid()) {
+    return NaN;
+  }
   var businessDay = this.isBusinessDay() ? this : this.prevBusinessDay();
   var monthBusinessDays = businessDay.monthBusinessDays();
   var businessDaysIntoMonth;
@@ -69,6 +72,9 @@ moment.fn.businessDiff = function (param) {
 
 moment.fn.businessAdd = function (number, period) {
   var day = this.clone();
+  if (!day.isValid()) {
+    return day;
+  }
   var signal = number < 0 ? -1 : 1;
   var remaining = Math.abs(number);
   period = typeof period !== 'undefined' ? period : 'days';
@@ -113,6 +119,9 @@ moment.fn.prevBusinessDay = function () {
 };
 
 moment.fn.monthBusinessDays = function (partialEndDate) {
+  if (!this.isValid()) {
+    return [];
+  }
   var me = this.clone();
   var day = me.clone().startOf('month');
   var end = partialEndDate ? partialEndDate : me.clone().endOf('month');
@@ -130,6 +139,9 @@ moment.fn.monthBusinessDays = function (partialEndDate) {
 };
 
 moment.fn.monthNaturalDays = function (fromToday) {
+  if (!this.isValid()) {
+    return [];
+  }
   var me = this.clone();
   var day = fromToday ? me.clone() : me.clone().startOf('month');
   var end = me.clone().endOf('month');
@@ -145,6 +157,9 @@ moment.fn.monthNaturalDays = function (fromToday) {
 };
 
 moment.fn.monthBusinessWeeks = function (fromToday) {
+  if (!this.isValid()) {
+    return [];
+  }
   var me = this.clone();
   var day = fromToday ? me.clone() : me.clone().startOf('month');
   var end = me.clone().endOf('month');
@@ -171,6 +186,9 @@ moment.fn.monthBusinessWeeks = function (fromToday) {
 };
 
 moment.fn.monthNaturalWeeks = function (fromToday) {
+  if (!this.isValid()) {
+    return [];
+  }
   var me = this.clone();
   var day = fromToday ? me.clone() : me.clone().startOf('month');
   var end = me.clone().endOf('month');

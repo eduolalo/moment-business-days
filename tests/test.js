@@ -104,6 +104,12 @@ describe('Moment Business Days', function () {
   describe('.businessDaysIntoMonth', function () {
     afterEach(resetLocale);
 
+    describe('When moment object is invalid', function () {
+      it('should return NaN', function () {
+        var businessDaysIntoMonth = moment(null).businessDaysIntoMonth();
+        expect(businessDaysIntoMonth).to.be.NaN;
+      });
+    });
     describe('On Wednesday, September 23rd 2015', function () {
       it('should be 17 when there are no holidays', function (done) {
         moment.updateLocale('us', {
@@ -133,6 +139,17 @@ describe('Moment Business Days', function () {
   describe('.businessAdd', function () {
     afterEach(resetLocale);
 
+    describe('When moment object is invalid', function () {
+      it('should return a new invalid moment object', function () {
+        var originalMoment = moment(null);
+        var newBusinessDay = originalMoment.businessAdd(3);
+        // Deepy equal but not strictly equal
+        expect(originalMoment).to.eql(newBusinessDay);
+        expect(originalMoment).not.equal(newBusinessDay);
+        // New moment object should also be invalid
+        expect(newBusinessDay.isValid()).to.be.false;
+      });
+    });
     describe('On Tuesday, November 3rd 2015', function () {
       it('adds business days only, excluding weekends, even over 2 weeks ', function (done) {
         var newBusinessDay = moment('11-03-2015', 'MM-DD-YYYY').businessAdd(5);
@@ -196,11 +213,11 @@ describe('Moment Business Days', function () {
       expect(diff).to.eql(6);
     });
     it('Should calculate nr of business with all working days', function () {
-      moment.locale('us', {
+      moment.updateLocale('us', {
         workingWeekdays: [0, 1, 2, 3, 4, 5, 6]
       });
       var diff = moment('06-18-2017', 'MM-DD-YYYY').businessDiff(
-        moment('05-18-2017')
+        moment('05-18-2017', 'MM-DD-YYYY')
       );
       expect(diff).to.eql(31);
     });
@@ -209,6 +226,25 @@ describe('Moment Business Days', function () {
         moment('05-08-2017', 'MM-DD-YYYY')
       );
       expect(diff).to.eql(0);
+    });
+  });
+  describe('Aggregate functions return empty array on invalid object', function () {
+    afterEach(resetLocale);
+    it('Should return empty array on .monthBusinessDays', function () {
+      var monthBusinessDays = moment(null).monthBusinessDays();
+      expect(monthBusinessDays).to.be.an('array').that.is.empty;
+    });
+    it('Should return empty array on .monthNaturalDays', function () {
+      var monthNaturalDays = moment(null).monthNaturalDays();
+      expect(monthNaturalDays).to.be.an('array').that.is.empty;
+    });
+    it('Should return empty array on .monthBusinessWeeks', function () {
+      var monthBusinessWeeks = moment(null).monthBusinessWeeks();
+      expect(monthBusinessWeeks).to.be.an('array').that.is.empty;
+    });
+    it('Should return empty array on .monthNaturalWeeks', function () {
+      var monthNaturalWeeks = moment(null).monthNaturalWeeks();
+      expect(monthNaturalWeeks).to.be.an('array').that.is.empty;
     });
   });
 });
