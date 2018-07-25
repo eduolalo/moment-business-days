@@ -196,7 +196,7 @@ describe('Moment Business Days', function () {
       expect(diff).to.eql(6);
     });
     it('Should calculate nr of business with all working days', function () {
-      moment.locale('us', {
+      moment.updateLocale('us', {
         workingWeekdays: [0, 1, 2, 3, 4, 5, 6]
       });
       var diff = moment('06-18-2017', 'MM-DD-YYYY').businessDiff(
