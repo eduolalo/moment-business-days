@@ -56,7 +56,7 @@ moment.fn.businessDiff = function (param) {
 
   var daysBetween = 0;
 
-  if (start === end) {
+  if (start.format('DD/MM/YYYY') === end.format('DD/MM/YYYY')) {
     return daysBetween;
   }
 

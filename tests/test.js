@@ -227,6 +227,12 @@ describe('Moment Business Days', function () {
       );
       expect(diff).to.eql(0);
     });
+    it('Should be zero days if start and end is same disregarding hours', function () {
+      var diff = moment('2018-08-16T19:06:57.665Z').businessDiff(
+        moment('2018-08-16T18:06:57.665Z')
+      );
+      expect(diff).to.eql(0);
+    });
   });
   describe('Aggregate functions return empty array on invalid object', function () {
     afterEach(resetLocale);
