@@ -1,7 +1,7 @@
 {
   "name": "moment-business-days",
   "version": "1.0.6",
-  "description": "MomentJS plugin to use business days ",
+  "description": "MomentJS plugin to use business days",
   "main": "index.js",
   "types": "./index.d.ts",
   "scripts": {
@@ -17,7 +17,7 @@
     "momentjs",
     "business",
     "days",
-    "pluin"
+    "plugin"
   ],
   "peerDependencies": {
     "moment": "2.x.x"
