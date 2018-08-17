@@ -17,7 +17,7 @@
     "momentjs",
     "business",
     "days",
-    "pluin"
+    "plugin"
   ],
   "peerDependencies": {
     "moment": "2.x.x"
