@@ -31,7 +31,7 @@
   "homepage": "https://github.com/kalmecak/moment-business-days",
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.4.1",
+    "mocha": "^5.2.0",
     "moment": "2.x.x"
   }
 }
