@@ -1,97 +1,68 @@
 # moment-business-days
-This is a momentJS plugin that allows you to use only business days (Monday to Friday).
+This is a [Moment.js](https://github.com/moment/moment/) plugin that allows you to work with only business days
+(Monday to Friday). You can customize the working week, and also set custom dates for holidays to exclude them from
+being counted as business days, for example **national holidays**.
 
-**NOTES:**
-* This plugin works on server and client side.
-* This plugin is based in [this repo](http://goo.gl/i9m4gJ)
+## Notes
+* This plugin works on both server and client side.
+* This plugin is based on [momentjs-business](https://github.com/leonardosantos/momentjs-business).
 * All contributions are welcome.
 * **Thaks to the contributors for making this plugin better!!**
 
-### Install:
-
-````
-// For NodeJS
-$ npm install moment-business-days
-// or install and save on package.json
-$ npm install moment-business-days -S
-
-// For bower
-$ bower install moment-business-days
-
-````
-### How to use:
+## Usage
 
 ````javascript
-// NodeJS
+// NodeJS: require instead of standard moment package
 var moment = require('moment-business-days');
-// You'll be able use moment as you normally do
+// You'll be able use Moment.js as you normally do
+````
 
-// Browser
-// Add after moment.js library
+````html
+<!-- Browser -->
+<!-- NB: add after moment.js -->
 <script src="moment.js"></script>
 <script src="moment-business-days.js"></script>
-
 ````
 
-#### Use localization to configure holidays:
+## Configuration
+
+### Use localization to configure holidays
 
 ````javascript
-
 var moment = require('moment-business-days');
 
 var july4th = '07-04-2015';
 var laborDay = '09-07-2015';
 
-moment.locale('us', {
+moment.updateLocale('us', {
    holidays: [july4th, laborDay],
-   holidayFormat: 'MM-DD-YYYY' 
+   holidayFormat: 'MM-DD-YYYY'
 });
 
 // moment-business-days will now stop considering these holidays as business days
-
 ````
-#### Use localization to customize working days:
+
+### Use localization to configure business days
 
 ````javascript
-
 var moment = require('moment-business-days');
 
-moment.locale('us', {
-   workingWeekdays: [1,2,3,4,5,6] 
+moment.updateLocale('us', {
+   workingWeekdays: [1, 2, 3, 4, 5, 6]
 });
 
-// Specifies days form 1 to 6 as a workingday, thus Monday to Saturday
-// When omitting this configuration parameter, workingdays as used based on locale default
-
+// Defines days from 1 (Monday) to 6 (Saturday) as business days. Note that Sunday is day 0.
+// When omitting this configuration parameter, business days are based on locale default
 ````
-#### Run Tests:
 
-`npm test`
+## API
 
-### Methods:
+The objects returned by methods are **Moment.js** objects (except `.isBusinessDay()` and `.businessDiff()`) so you can
+handle them with **Moment.js** native methods.
 
+#### `.isBusinessDay()` => boolean
 
-**businessAdd(days)**
-
-Will add just business days excluding Saturday and Sunday, return a moment date object:
-
-```javascript
-// 30-01-2015 is Friday, DD-MM-YYYY is the format
-moment('30-01-2015', 'DD-MM-YYYY').businessAdd(3)._d // Wed Feb 04 2015 00:00:00 GMT-0600 (CST)
-```
-
-**businessSubtract(days)**
-
-Will subtract just business days excluding Saturday and Sunday, return a moment date object:
-
-```javascript
-// 27-01-2015 is Tuesday, DD-MM-YYYY is the format
-moment('27-01-2015', 'DD-MM-YYYY').businessSubtract(3)._d // Thu Jan 22 2015 00:00:00 GMT-0600 (CST)
-```
-
-**isBusinessDay()**
-
-Check if the date is a business day and return  **true**/**false**:
+Check if the date is a business day and return **true** or **false**:
 
 ```javascript
 // 31-01-2015 is Saturday
@@ -101,36 +72,63 @@ moment('31-01-2015', 'DD-MM-YYYY').isBusinessDay() // false
 moment('30-01-2015', 'DD-MM-YYYY').isBusinessDay() // true
 ```
 
-**nextBusinessDay()**
+#### `.businessDiff()` => number
 
-Will retrieve the next business date as moment date object:
+Calculate the number of business days between dates.
 
 ```javascript
-//Next business day of Friday 30-01-2015
+var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','MM-DD-YYYY'));
+// diff = 5
+```
+
+#### `.businessAdd(days)` => Moment
+
+Will add the given number of days skipping business days, returning a **Moment.js** object:
+
+```javascript
+// 30-01-2015 is Friday, DD-MM-YYYY is the format
+moment('30-01-2015', 'DD-MM-YYYY').businessAdd(3)._d // Wed Feb 04 2015 00:00:00 GMT-0600 (CST)
+```
+
+#### `.businessSubtract(days)` => Moment
+
+Will subtract the given number of days skipping business days, returning a **Moment.js** object:
+
+```javascript
+// 27-01-2015 is Tuesday, DD-MM-YYYY is the format
+moment('27-01-2015', 'DD-MM-YYYY').businessSubtract(3)._d // Thu Jan 22 2015 00:00:00 GMT-0600 (CST)
+```
+
+#### `.nextBusinessDay()` => Moment
+
+Will retrieve the next business date as a **Moment.js** object:
+
+```javascript
+// Next business day from Friday 30-01-2015
 moment('30-01-2015', 'DD-MM-YYYY').nextBusinessDay()._d // Mon Feb 02 2015 00:00:00 GMT-0600 (CST)
 
-//Next business day of Monday 02-02-2015
+// Next business day from Monday 02-02-2015
 moment('02-02-2015', 'DD-MM-YYYY').nextBusinessDay()._d //Tue Feb 03 2015 00:00:00 GMT-0600 (CST)
 ```
 
-**prevBusinessDay()**
+#### `.prevBusinessDay()` => Moment
 
-Will retrieve the previous business date as moment date object:
+Will retrieve the previous business date as a **Moment.js** object:
 
 ```javascript
-//Previous business day of Monday 02-02-2015
+// Previous business day of Monday 02-02-2015
 moment('02-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d // Fri Jan 30 2015 00:00:00 GMT-0600 (CST)
 
-//Previous business day of Tuesday 03-02-2015
+// Previous business day of Tuesday 03-02-2015
 moment('03-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d //Mon Feb 02 2015 00:00:00 GMT-0600 (CST)
 ```
 
-**monthBusinessDays()**
+#### `.monthBusinessDays()` => Moment[]
 
-Retrieve an array of the business days in the month, each one is a moment object.
+Retrieve an array of the business days in the month, each one is a **Moment.js** object.
 
 ```javascript
-//Busines days in month January 2015
+// Business days in month January 2015
 moment('01-01-2015', 'DD-MM-YYYY').monthBusinessDays()
 
 /*
@@ -149,13 +147,16 @@ moment('01-01-2015', 'DD-MM-YYYY').monthBusinessDays()
 */
 ```
 
-**monthNaturalDays()**
+#### `.monthNaturalDays()` => Moment[]
 
-Is like monthBusinessDays(), but this method will include the weekends on it's response.
+Is like `.monthBusinessDays()`, but this method will include the weekends in it's response.
 
-**monthBusinessWeeks()**
+#### `.monthBusinessWeeks()` => Moment[][]
 
-Retrieve an array of arrays, these arrays are the representation of a business weeks and each week (array) have it own business days (Monday to Friday). There could be the case that one week (array) have less than 5 days, this is because the month started on the middle of the week, for example: the first week of January 2015 just have two days, Thursday 1st and Friday 2nd. **Each day in the week arrays are moment objects.**
+Retrieve an array of arrays, these arrays are the representation of a business weeks and each week (array) have it own
+business days (Monday to Friday). There could be the case that one week (array) have less than 5 days, this is because
+the month started in the middle of a week, for example: the first week of January 2015 has just two days,
+Thursday 1st and Friday 2nd. **Each day in the week arrays are Moment.js objects.**
 
 ```javascript
 // Business weeks in month January 2015
@@ -168,7 +169,7 @@ moment('01-01-2015', 'DD-MM-YYYY').monthBusinessWeeks()
       _isUTC: false,
       _pf: [...],
       _locale: [...],
-      _d: Thu Jan 01 2015 00:00:00 GMT-0600 (CST) 
+      _d: Thu Jan 01 2015 00:00:00 GMT-0600 (CST)
     }, { _isAMomentObject: true,
       _i: '01-01-2015',
       _f: 'DD-MM-YYYY',
@@ -181,18 +182,26 @@ moment('01-01-2015', 'DD-MM-YYYY').monthBusinessWeeks()
 ]
 */
 ```
-**monthNaturalWeeks()**
 
-It's like monthBusinessWeeks(), but this method will include weekends on it's response.
+#### `.monthNaturalWeeks()` => Moment[][]
 
-The objects returned by functions are momentjs objects (**except isBusinessDay**) so you can handle it with moment native functions.
+It's like `.monthBusinessWeeks()`, but this method will include weekends in it's response.
 
-**businessDiff()**
+## Installation
 
-Calculate number of business days between dates.
+````
+// For Node.js
+$ npm install moment-business-days
 
-```javascript
+// ...or install and save in package.json
+$ npm install --save moment-business-days
 
-var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','MM-DD-YYYY'));
-// diff = 5
-/*
+// For bower
+$ bower install moment-business-days
+````
+
+## Testing
+
+````
+npm test
+````
