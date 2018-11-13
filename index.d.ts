@@ -25,3 +25,5 @@ declare module 'moment' {
         holidayFormat?: string;
     }
 }
+
+export = moment;
