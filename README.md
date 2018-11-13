@@ -60,9 +60,13 @@ moment.updateLocale('us', {
 The objects returned by methods are **Moment.js** objects (except `.isBusinessDay()` and `.businessDiff()`) so you can
 handle them with **Moment.js** native methods.
 
+#### `.isHoliday()` => boolean
+
+Check if the date is among the holidays specified, and return **true** or **false**:
+
 #### `.isBusinessDay()` => boolean
 
-Check if the date is a business day and return **true** or **false**:
+Check if the date is a business day, and return **true** or **false**:
 
 ```javascript
 // 31-01-2015 is Saturday
@@ -72,9 +76,13 @@ moment('31-01-2015', 'DD-MM-YYYY').isBusinessDay() // false
 moment('30-01-2015', 'DD-MM-YYYY').isBusinessDay() // true
 ```
 
+#### `.businessDaysIntoMonth()` => number
+
+Calculate the amount of business days in the month of the **Moment.js** object.
+
 #### `.businessDiff()` => number
 
-Calculate the number of business days between dates.
+Calculate the amount of business days between dates.
 
 ```javascript
 var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','MM-DD-YYYY'));
