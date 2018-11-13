@@ -5,7 +5,7 @@ declare module 'moment' {
         isHoliday: () => boolean;
         isBusinessDay: () => boolean;
 
-        businessDaysIntoMonth: () => Moment;
+        businessDaysIntoMonth: () => number;
 
         businessDiff: (param: Moment) => number;
         businessAdd: (param: number, period?: unitOfTime.Base) => Moment;
