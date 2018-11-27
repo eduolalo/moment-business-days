@@ -23,6 +23,7 @@ declare module 'moment' {
     interface LocaleSpecification {
         holidays?: string[];
         holidayFormat?: string;
+        workingWeekdays?: number[];
     }
 }
 
