@@ -71,15 +71,22 @@ moment.fn.businessDiff = function (param) {
 };
 
 moment.fn.businessAdd = function (number, period) {
-  var day = this.clone();
+  var day = this.clone().startOf('day');
   if (!day.isValid()) {
     return day;
   }
+
+  if (number < 0) {
+    number = Math.round(-1 * number) * -1;
+  } else {
+    number = Math.round(number);
+  }
+
   var signal = number < 0 ? -1 : 1;
-  var remaining = Math.abs(number);
   period = typeof period !== 'undefined' ? period : 'days';
 
-  while (remaining) {
+  var remaining = Math.abs(number);
+  while (remaining > 0) {
     day.add(signal, period);
 
     if (day.isBusinessDay()) {
