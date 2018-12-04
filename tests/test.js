@@ -151,27 +151,37 @@ describe('Moment Business Days', function () {
       });
     });
     describe('On Tuesday, November 3rd 2015', function () {
-      it('adds business days only, excluding weekends, even over 2 weeks ', function (done) {
+      it('adds business days only, excluding weekends, even over 2 weeks', function (done) {
         var newBusinessDay = moment('11-03-2015', 'MM-DD-YYYY').businessAdd(5);
         expect(newBusinessDay.format('D')).to.eql('10');
         done();
       });
-      it('adds business days only, excluding weekends ', function (done) {
+      it('adds business days only, excluding weekends', function (done) {
         var newBusinessDay = moment('11-03-2015', 'MM-DD-YYYY').businessAdd(10);
         expect(newBusinessDay.format('D')).to.eql('17');
         done();
       });
-      it('adds business days only, excluding weekends, handles fractional days without infinite loop ', function (done) {
-        var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(10.5);
+      it('adds business days only, excluding weekends, rounding down fractional day values', function (done) {
+        var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(10.4);
         expect(newBusinessDay.format('D')).to.eql('17');
         done();
       });
-      it('subtracts business days only, excluding weekends, handles fractional days without infinite loop ', function (done) {
-        var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(-10.5);
+      it('adds business days only, excluding weekends, rounding up fractional day values', function (done) {
+        var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(10.5);
+        expect(newBusinessDay.format('D')).to.eql('18');
+        done();
+      });
+      it('subtracts business days when negative values are added, excluding weekends, rounding down fractional day values', function (done) {
+        var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(-10.4);
         expect(newBusinessDay.format('D')).to.eql('20');
         done();
       });
-      it('adds business hours only, excluding weekends ', function (done) {
+      it('subtracts business days when negative values are added, excluding weekends, rounding up fractional day values', function (done) {
+        var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(-10.5);
+        expect(newBusinessDay.format('D')).to.eql('19');
+        done();
+      });
+      it('adds business hours only, excluding weekends', function (done) {
         var newBusinessDay = moment('11-06-2015', 'MM-DD-YYYY').businessAdd(
           36,
           'hours'
