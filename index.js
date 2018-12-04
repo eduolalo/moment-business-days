@@ -75,10 +75,17 @@ moment.fn.businessAdd = function (number, period) {
   if (!day.isValid()) {
     return day;
   }
+
+  if (number < 0) {
+    number = Math.round(-1 * number) * -1;
+  } else {
+    number = Math.round(number);
+  }
+
   var signal = number < 0 ? -1 : 1;
-  var remaining = Math.abs(Math.trunc(number));
   period = typeof period !== 'undefined' ? period : 'days';
 
+  var remaining = Math.abs(number);
   while (remaining > 0) {
     day.add(signal, period);
 
