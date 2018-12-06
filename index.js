@@ -71,7 +71,7 @@ moment.fn.businessDiff = function (param) {
 };
 
 moment.fn.businessAdd = function (number, period) {
-  var day = this.clone();
+  var day = this.clone().startOf('day');
   if (!day.isValid()) {
     return day;
   }
