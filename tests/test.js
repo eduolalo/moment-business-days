@@ -161,6 +161,11 @@ describe('Moment Business Days', function () {
         expect(newBusinessDay.format('D')).to.eql('17');
         done();
       });
+      it('adds business days only, excluding weekends, preserving time-of-day', function (done) {
+        var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(10);
+        expect(newBusinessDay.format('MM-DD-YYYY hh:mm:ss')).to.eql('11-17-2015 12:42:00');
+        done();
+      });
       it('adds business days only, excluding weekends, rounding down fractional day values', function (done) {
         var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(10.4);
         expect(newBusinessDay.format('D')).to.eql('17');
