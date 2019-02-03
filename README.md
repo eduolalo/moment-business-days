@@ -91,7 +91,7 @@ var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','
 
 #### `.businessAdd(days)` => Moment
 
-Will add the given number of days skipping business days, returning a **Moment.js** object:
+Will add the given number of days skipping non-business days, returning a **Moment.js** object:
 
 ```javascript
 // 30-01-2015 is Friday, DD-MM-YYYY is the format
@@ -100,7 +100,7 @@ moment('30-01-2015', 'DD-MM-YYYY').businessAdd(3)._d // Wed Feb 04 2015 00:00:00
 
 #### `.businessSubtract(days)` => Moment
 
-Will subtract the given number of days skipping business days, returning a **Moment.js** object:
+Will subtract the given number of days skipping non-business days, returning a **Moment.js** object:
 
 ```javascript
 // 27-01-2015 is Tuesday, DD-MM-YYYY is the format
