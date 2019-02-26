@@ -7,7 +7,7 @@ being counted as business days, for example **national holidays**.
 * This plugin works on both server and client side.
 * This plugin is based on [momentjs-business](https://github.com/leonardosantos/momentjs-business).
 * All contributions are welcome.
-* **Thaks to the contributors for making this plugin better!!**
+* **Thanks to the contributors for making this plugin better!!**
 
 ## Usage
 
