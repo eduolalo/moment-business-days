@@ -102,8 +102,11 @@ moment.fn.businessSubtract = function (number, period) {
 };
 
 moment.fn.nextBusinessDay = function () {
+  var locale = this.localeData();
+
   var loop = 1;
-  var limit = 7;
+  var defaultNextBusinessDayLimit = 7;
+  var limit = locale._nextBusinessDayLimit || defaultNextBusinessDayLimit;
   while (loop < limit) {
     if (this.add(1, 'd').isBusinessDay()) {
       break;
@@ -114,8 +117,11 @@ moment.fn.nextBusinessDay = function () {
 };
 
 moment.fn.prevBusinessDay = function () {
+  var locale = this.localeData();
+
   var loop = 1;
-  var limit = 7;
+  var defaultPrevBusinessDayLimit = 7;
+  var limit = locale._prevBusinessDayLimit || defaultPrevBusinessDayLimit;
   while (loop < limit) {
     if (this.subtract(1, 'd').isBusinessDay()) {
       break;

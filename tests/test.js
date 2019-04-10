@@ -21,6 +21,25 @@ describe('Moment Business Days', function () {
         done();
       });
     });
+    describe('On April 10th, 2019', function () {
+      beforeEach(function (done) {
+        moment.updateLocale('us', {
+          holidays: ['04-05-2019', '04-06-2019', '04-07-2019', '04-08-2019', '04-09-2019'],
+          holidayFormat: 'MM-DD-YYYY',
+          workingWeekdays: [1],
+          prevBusinessDayLimit: 31,
+        });
+        done();
+      });
+
+      afterEach(resetLocale);
+
+      it('should be 1st when considering holidays and custom working days', function (done) {
+        var first = moment().prevBusinessDay();
+        expect(first.format('D')).to.eql('1');
+        done();
+      });
+    });
   });
   describe('.isBusinessDay', function () {
     describe('When today is a regular weekday', function () {
