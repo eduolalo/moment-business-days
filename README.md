@@ -119,6 +119,16 @@ moment('30-01-2015', 'DD-MM-YYYY').nextBusinessDay()._d // Mon Feb 02 2015 00:00
 moment('02-02-2015', 'DD-MM-YYYY').nextBusinessDay()._d //Tue Feb 03 2015 00:00:00 GMT-0600 (CST)
 ```
 
+By default only 7 days into the future are checked for the next business day. To search beyond 7 days
+set the nextBusinessDayLimit (as a number) higher.
+````javascript
+var moment = require('moment-business-days');
+
+moment.updateLocale('us', {
+   nextBusinessDayLimit: 31
+});
+````
+
 #### `.prevBusinessDay()` => Moment
 
 Will retrieve the previous business date as a **Moment.js** object:
@@ -130,6 +140,16 @@ moment('02-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d // Fri Jan 30 2015 00:00
 // Previous business day of Tuesday 03-02-2015
 moment('03-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d //Mon Feb 02 2015 00:00:00 GMT-0600 (CST)
 ```
+
+By default only the last 7 days are checked for the previous business day. To search beyond 7 days
+set the prevBusinessDayLimit (as a number) higher.
+````javascript
+var moment = require('moment-business-days');
+
+moment.updateLocale('us', {
+   prevBusinessDayLimit: 31
+});
+````
 
 #### `.monthBusinessDays()` => Moment[]
 
