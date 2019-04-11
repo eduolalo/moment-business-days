@@ -4,7 +4,11 @@ var expect = require('chai').expect;
 var holidayFormat = 'MM-DD-YYYY';
 
 var resetLocale = function (done) {
-  moment.updateLocale('us', {});
+  moment.updateLocale('us', {
+    holidays: [],
+    holidayFormat: '',
+    workingWeekdays: [1,2,3,4,5],
+  });
   done();
 };
 
