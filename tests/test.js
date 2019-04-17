@@ -251,6 +251,19 @@ describe('Moment Business Days', function () {
       );
       expect(diff).to.eql(5);
     });
+    it('Should be negative if start is after end and relative is true', function () {
+      var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(
+        moment('05-15-2017', 'MM-DD-YYYY'),
+        true
+      );
+      expect(diff).to.eql(-5);
+    });
+    it('Should be positive if start is after end and relative is false', function () {
+      var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(
+        moment('05-15-2017', 'MM-DD-YYYY')
+      );
+      expect(diff).to.eql(5);
+    });
     it('Should calculate nr of business days with custom workingdays', function () {
       moment.updateLocale('us', {
         workingWeekdays: [1, 2, 3, 4, 5, 6]

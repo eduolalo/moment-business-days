@@ -89,6 +89,15 @@ var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','
 // diff = 5
 ```
 
+Note that the default behavior of `businessDiff` is to return an **absolute** value,
+which is a departure from moment's `diff`. To match the behavior of `diff` pass
+`true` as the second argument to `businessDiff`:
+
+```javascript
+var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(moment('05-15-2017','MM-DD-YYYY'), true);
+// diff = -5
+```
+
 #### `.businessAdd(days)` => Moment
 
 Will add the given number of days skipping non-business days, returning a **Moment.js** object:

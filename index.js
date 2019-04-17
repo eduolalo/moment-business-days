@@ -48,9 +48,10 @@ moment.fn.businessDaysIntoMonth = function () {
   return businessDaysIntoMonth;
 };
 
-moment.fn.businessDiff = function (param) {
+moment.fn.businessDiff = function (param, relative) {
   var d1 = this.clone();
   var d2 = param.clone();
+  var positive = d1 >= d2;
   var start = d1 < d2 ? d1 : d2;
   var end = d2 > d1 ? d2 : d1;
 
@@ -65,6 +66,10 @@ moment.fn.businessDiff = function (param) {
       daysBetween++;
     }
     start.add(1, 'd');
+  }
+
+  if (relative) {
+    return positive ? daysBetween : -daysBetween;
   }
 
   return daysBetween;
