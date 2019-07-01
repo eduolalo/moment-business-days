@@ -173,6 +173,13 @@ describe('Moment Business Days', function () {
         expect(newBusinessDay.isValid()).to.be.false;
       });
     });
+    describe('On Thursday, January 3rd 2019', function () {
+      it('adds one business day, then converts to string with toISOString()', function (done) {
+        var newBusinessDay = moment('2019-01-03T12:00:00.000Z').businessAdd(1, 'days');
+        expect(newBusinessDay.toISOString()).to.eql('2019-01-04T12:00:00.000Z');
+        done();
+      });
+    });
     describe('On Tuesday, November 3rd 2015', function () {
       it('adds business days only, excluding weekends, even over 2 weeks', function (done) {
         var newBusinessDay = moment('11-03-2015', 'MM-DD-YYYY').businessAdd(5);
