@@ -39,7 +39,7 @@ describe('Moment Business Days', function () {
       afterEach(resetLocale);
 
       it('should be 1st when considering holidays and custom working days', function (done) {
-        var first = moment().prevBusinessDay();
+        var first = moment('04-10-2019', 'MM-DD-YYYY').prevBusinessDay();
         expect(first.format('D')).to.eql('1');
         done();
       });
