@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 
 declare module 'moment' {
     interface Moment {
