@@ -1,4 +1,9 @@
 # moment-business-days
+
+<a href="https://github.com/kalmecak/moment-business-days/actions" target="_blank">
+  <img alt="Version" src="https://github.com/kalmecak/moment-business-days/workflows/Continuous%20Integration/badge.svg?branch=master">
+</a>
+
 This is a [Moment.js](https://github.com/moment/moment/) plugin that allows you to work with only business days
 (Monday to Friday). You can customize the working week, and also set custom dates for holidays to exclude them from
 being counted as business days, for example **national holidays**.
