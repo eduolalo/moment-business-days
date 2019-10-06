@@ -1,0 +1,16 @@
+name: Continuous Integration
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-10.14, windows-2016, ubuntu-latest]
+        node: [4, 6, 8, 10, 12]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - run: npm install
+      - run: npm test
