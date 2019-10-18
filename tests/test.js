@@ -302,6 +302,18 @@ describe('Moment Business Days', function () {
       expect(diff).to.eql(0);
     });
   });
+  describe('Business Weeks', function () {
+    afterEach(resetLocale);
+    it('Should return array of business weeks on .monthBusinessWeeks', function () {
+      var monthBusinessWeeks = moment('2019-02-02').monthBusinessWeeks();
+      expect(monthBusinessWeeks).to.be.an('array').with.length(5);
+    });
+    it('Should return array of business weeks on .businessWeeksBetween', function () {
+      var businessWeeksBetween = moment('2019-02-02').businessWeeksBetween(moment('2019-04-02'));
+      expect(businessWeeksBetween).to.be.an('array').with.length(9);
+    });
+
+  });
   describe('Aggregate functions return empty array on invalid object', function () {
     afterEach(resetLocale);
     it('Should return empty array on .monthBusinessDays', function () {
@@ -323,14 +335,6 @@ describe('Moment Business Days', function () {
     it('Should return empty array on .businessWeeksBetween', function () {
       var businessWeeksBetween = moment(null).businessWeeksBetween();
       expect(businessWeeksBetween).to.be.an('array').that.is.empty;
-    });
-    it('Should return array of business weeks on .monthBusinessWeeks', function () {
-      var monthBusinessWeeks = moment('2019-02-02').monthBusinessWeeks();
-      expect(monthBusinessWeeks).to.be.an('array').that.is.not.empty;
-    });
-    it('Should return array of business weeks on .businessWeeksBetween', function () {
-      var businessWeeksBetween = moment('2019-02-02').businessWeeksBetween(moment('2019-04-02'));
-      expect(businessWeeksBetween).to.be.an('array').that.is.not.empty;
     });
   });
 });
