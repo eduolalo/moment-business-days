@@ -18,6 +18,7 @@ declare module 'moment' {
         monthNaturalDays(fromToday?: boolean): Moment[];
         monthBusinessWeeks(fromToday?: boolean): Moment[][];
         monthNaturalWeeks(fromToday?: boolean): Moment[][];
+        businessWeeksBetween(endDate: Moment): Moment[][];
     }
 
     interface LocaleSpecification {

@@ -320,5 +320,9 @@ describe('Moment Business Days', function () {
       var monthNaturalWeeks = moment(null).monthNaturalWeeks();
       expect(monthNaturalWeeks).to.be.an('array').that.is.empty;
     });
+    it('Should return empty array on .businessWeeksBetween', function () {
+      var businessWeeksBetween = moment(null).businessWeeksBetween();
+      expect(businessWeeksBetween).to.be.an('array').that.is.empty;
+    });
   });
 });
