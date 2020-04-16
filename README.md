@@ -1,4 +1,9 @@
 # moment-business-days
+
+<a href="https://github.com/kalmecak/moment-business-days/actions" target="_blank">
+  <img alt="Version" src="https://github.com/kalmecak/moment-business-days/workflows/Continuous%20Integration/badge.svg?branch=master">
+</a>
+
 This is a [Moment.js](https://github.com/moment/moment/) plugin that allows you to work with only business days
 (Monday to Friday). You can customize the working week, and also set custom dates for holidays to exclude them from
 being counted as business days, for example **national holidays**.
@@ -7,7 +12,7 @@ being counted as business days, for example **national holidays**.
 * This plugin works on both server and client side.
 * This plugin is based on [momentjs-business](https://github.com/leonardosantos/momentjs-business).
 * All contributions are welcome.
-* **Thaks to the contributors for making this plugin better!!**
+* **Thanks to the contributors for making this plugin better!!**
 
 ## Usage
 
@@ -89,6 +94,15 @@ var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','
 // diff = 5
 ```
 
+Note that the default behavior of `businessDiff` is to return an **absolute** value,
+which is a departure from moment's `diff`. To match the behavior of `diff` pass
+`true` as the second argument to `businessDiff`:
+
+```javascript
+var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(moment('05-15-2017','MM-DD-YYYY'), true);
+// diff = -5
+```
+
 #### `.businessAdd(days)` => Moment
 
 Will add the given number of days skipping non-business days, returning a **Moment.js** object:
@@ -119,6 +133,16 @@ moment('30-01-2015', 'DD-MM-YYYY').nextBusinessDay()._d // Mon Feb 02 2015 00:00
 moment('02-02-2015', 'DD-MM-YYYY').nextBusinessDay()._d //Tue Feb 03 2015 00:00:00 GMT-0600 (CST)
 ```
 
+By default only 7 days into the future are checked for the next business day. To search beyond 7 days
+set the nextBusinessDayLimit (as a number) higher.
+````javascript
+var moment = require('moment-business-days');
+
+moment.updateLocale('us', {
+   nextBusinessDayLimit: 31
+});
+````
+
 #### `.prevBusinessDay()` => Moment
 
 Will retrieve the previous business date as a **Moment.js** object:
@@ -130,6 +154,16 @@ moment('02-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d // Fri Jan 30 2015 00:00
 // Previous business day of Tuesday 03-02-2015
 moment('03-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d //Mon Feb 02 2015 00:00:00 GMT-0600 (CST)
 ```
+
+By default only the last 7 days are checked for the previous business day. To search beyond 7 days
+set the prevBusinessDayLimit (as a number) higher.
+````javascript
+var moment = require('moment-business-days');
+
+moment.updateLocale('us', {
+   prevBusinessDayLimit: 31
+});
+````
 
 #### `.monthBusinessDays()` => Moment[]
 

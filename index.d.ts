@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 
 declare module 'moment' {
     interface Moment {
@@ -18,11 +18,14 @@ declare module 'moment' {
         monthNaturalDays(fromToday?: boolean): Moment[];
         monthBusinessWeeks(fromToday?: boolean): Moment[][];
         monthNaturalWeeks(fromToday?: boolean): Moment[][];
+        businessWeeksBetween(endDate: Moment): Moment[][];
     }
 
     interface LocaleSpecification {
         holidays?: string[];
         holidayFormat?: string;
+        nextBusinessDayLimit?: number;
+        prevBusinessDayLimit?: number;
         workingWeekdays?: number[];
     }
 }

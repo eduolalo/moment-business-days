@@ -4,7 +4,11 @@ var expect = require('chai').expect;
 var holidayFormat = 'MM-DD-YYYY';
 
 var resetLocale = function (done) {
-  moment.updateLocale('us', {});
+  moment.updateLocale('us', {
+    holidays: [],
+    holidayFormat: '',
+    workingWeekdays: [1,2,3,4,5],
+  });
   done();
 };
 
@@ -18,6 +22,25 @@ describe('Moment Business Days', function () {
           .add(1, 'days');
         var friday = monday.prevBusinessDay();
         expect(friday.format('dddd')).to.eql('Friday');
+        done();
+      });
+    });
+    describe('On April 10th, 2019', function () {
+      beforeEach(function (done) {
+        moment.updateLocale('us', {
+          holidays: ['04-05-2019', '04-06-2019', '04-07-2019', '04-08-2019', '04-09-2019'],
+          holidayFormat: 'MM-DD-YYYY',
+          workingWeekdays: [1],
+          prevBusinessDayLimit: 31,
+        });
+        done();
+      });
+
+      afterEach(resetLocale);
+
+      it('should be 1st when considering holidays and custom working days', function (done) {
+        var first = moment('04-10-2019', 'MM-DD-YYYY').prevBusinessDay();
+        expect(first.format('D')).to.eql('1');
         done();
       });
     });
@@ -150,6 +173,13 @@ describe('Moment Business Days', function () {
         expect(newBusinessDay.isValid()).to.be.false;
       });
     });
+    describe('On Thursday, January 3rd 2019', function () {
+      it('adds one business day, then converts to string with toISOString()', function (done) {
+        var newBusinessDay = moment('2019-01-03T12:00:00.000Z').businessAdd(1, 'days');
+        expect(newBusinessDay.toISOString()).to.eql('2019-01-04T12:00:00.000Z');
+        done();
+      });
+    });
     describe('On Tuesday, November 3rd 2015', function () {
       it('adds business days only, excluding weekends, even over 2 weeks', function (done) {
         var newBusinessDay = moment('11-03-2015', 'MM-DD-YYYY').businessAdd(5);
@@ -228,6 +258,19 @@ describe('Moment Business Days', function () {
       );
       expect(diff).to.eql(5);
     });
+    it('Should be negative if start is after end and relative is true', function () {
+      var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(
+        moment('05-15-2017', 'MM-DD-YYYY'),
+        true
+      );
+      expect(diff).to.eql(-5);
+    });
+    it('Should be positive if start is after end and relative is false', function () {
+      var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(
+        moment('05-15-2017', 'MM-DD-YYYY')
+      );
+      expect(diff).to.eql(5);
+    });
     it('Should calculate nr of business days with custom workingdays', function () {
       moment.updateLocale('us', {
         workingWeekdays: [1, 2, 3, 4, 5, 6]
@@ -259,6 +302,18 @@ describe('Moment Business Days', function () {
       expect(diff).to.eql(0);
     });
   });
+  describe('Business Weeks', function () {
+    afterEach(resetLocale);
+    it('Should return array of business weeks on .monthBusinessWeeks', function () {
+      var monthBusinessWeeks = moment('2019-02-02').monthBusinessWeeks();
+      expect(monthBusinessWeeks).to.be.an('array').with.length(5);
+    });
+    it('Should return array of business weeks on .businessWeeksBetween', function () {
+      var businessWeeksBetween = moment('2019-02-02').businessWeeksBetween(moment('2019-04-02'));
+      expect(businessWeeksBetween).to.be.an('array').with.length(9);
+    });
+
+  });
   describe('Aggregate functions return empty array on invalid object', function () {
     afterEach(resetLocale);
     it('Should return empty array on .monthBusinessDays', function () {
@@ -276,6 +331,10 @@ describe('Moment Business Days', function () {
     it('Should return empty array on .monthNaturalWeeks', function () {
       var monthNaturalWeeks = moment(null).monthNaturalWeeks();
       expect(monthNaturalWeeks).to.be.an('array').that.is.empty;
+    });
+    it('Should return empty array on .businessWeeksBetween', function () {
+      var businessWeeksBetween = moment(null).businessWeeksBetween();
+      expect(businessWeeksBetween).to.be.an('array').that.is.empty;
     });
   });
 });
