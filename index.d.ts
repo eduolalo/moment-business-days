@@ -7,7 +7,7 @@ declare module 'moment' {
 
         businessDaysIntoMonth(): number;
 
-        businessDiff(param: Moment): number;
+        businessDiff(param: Moment, relative?: boolean): number;
         businessAdd(param: number, period?: unitOfTime.Base): Moment;
         businessSubtract(param: number, period?: unitOfTime.Base): Moment;
 
