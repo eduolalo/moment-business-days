@@ -54,14 +54,13 @@ moment.fn.businessDiff = function (param, relative) {
   var positive = d1 >= d2;
   var start = d1 < d2 ? d1 : d2;
   var end = d2 > d1 ? d2 : d1;
-
   var daysBetween = 0;
 
-  if (start.format('DD/MM/YYYY') === end.format('DD/MM/YYYY')) {
+  if (start.isSame(end, 'day')) {
     return daysBetween;
   }
 
-  while (start < end) {
+  while (start.isBefore(end, 'day')) {
     if (start.isBusinessDay()) {
       daysBetween++;
     }
@@ -69,7 +68,7 @@ moment.fn.businessDiff = function (param, relative) {
   }
 
   if (relative) {
-    return positive ? daysBetween : -daysBetween;
+    return (positive ? daysBetween : -daysBetween);
   }
 
   return daysBetween;

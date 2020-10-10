@@ -301,6 +301,12 @@ describe('Moment Business Days', function () {
       );
       expect(diff).to.eql(0);
     });
+    it('Business diff should disregard time (hour) in calculating business days', function () {
+      var diff = moment('2018-09-04T14:48:46.000Z').businessDiff(
+        moment('2018-08-30T11:48:46.000Z')
+      );
+      expect(diff).to.eql(3);
+    });
   });
   describe('Business Weeks', function () {
     afterEach(resetLocale);
