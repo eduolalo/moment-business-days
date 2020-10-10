@@ -8,8 +8,9 @@ moment.fn.isHoliday = function () {
   var locale = this.localeData();
 
   if (locale._holidays) {
-    if (locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0)
+    if (locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0) {
       return true;
+    }
   }
 
   if (locale.holiday) {
@@ -141,7 +142,7 @@ moment.fn.monthBusinessDays = function (partialEndDate) {
   }
   var me = this.clone();
   var day = me.clone().startOf('month');
-  var end = partialEndDate ? partialEndDate : me.clone().endOf('month');
+  var end = partialEndDate || me.clone().endOf('month');
   var daysArr = [];
   var done = false;
   while (!done) {
@@ -213,7 +214,7 @@ var getBusinessWeeks = function (self, fromToday, endDate, startDate) {
     }
   }
   return weeksArr;
-}
+};
 
 moment.fn.monthNaturalWeeks = function (fromToday) {
   if (!this.isValid()) {
@@ -242,6 +243,6 @@ moment.fn.monthNaturalWeeks = function (fromToday) {
   return weeksArr;
 };
 
-if (typeof module != 'undefined' && module.exports) {
+if (typeof module !== 'undefined' && module.exports) {
   module.exports = moment;
 }

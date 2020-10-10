@@ -328,7 +328,6 @@ describe('Moment Business Days', function () {
       var businessWeeksBetween = moment('2019-02-02').businessWeeksBetween(moment('2019-04-02'));
       expect(businessWeeksBetween).to.be.an('array').with.length(9);
     });
-
   });
   describe('Aggregate functions return empty array on invalid object', function () {
     afterEach(resetLocale);
