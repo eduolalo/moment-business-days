@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 'use strict';
 var moment = require('../index');
 var expect = require('chai').expect;
@@ -5,9 +7,11 @@ var holidayFormat = 'MM-DD-YYYY';
 
 var resetLocale = function (done) {
   moment.updateLocale('us', {
-    holidays: [],
-    holidayFormat: '',
-    workingWeekdays: [1,2,3,4,5],
+    holidays: [
+      '07/04/2016'
+    ],
+    holidayFormat: 'MM/DD/YYYY',
+    workingWeekdays: [1, 2, 3, 4, 5],
   });
   done();
 };
@@ -300,6 +304,12 @@ describe('Moment Business Days', function () {
         moment('2018-08-16T18:06:57.665Z')
       );
       expect(diff).to.eql(0);
+    });
+    it('Business diff should account for holidays', function () {
+      var start = moment('07/01/2016', 'MM/DD/YYYY');
+      var end = moment('07/10/2016', 'MM/DD/YYYY');
+      var diff = start.businessDiff(end);
+      expect(diff).to.eql(5);
     });
     it('Business diff should disregard time (hour) in calculating business days', function () {
       var diff = moment('2018-09-04T14:48:46.000Z').businessDiff(
