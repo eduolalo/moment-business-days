@@ -63,9 +63,14 @@ moment.fn.businessDiff = function (param, relative) {
 
   while (start.isBefore(end, 'day')) {
     if (start.isBusinessDay()) {
-      daysBetween++;
+      daysBetween += 1;
     }
     start.add(1, 'd');
+
+  }
+
+  if (!end.isBusinessDay()) {
+    daysBetween -= 1;
   }
 
   if (relative) {
@@ -95,7 +100,7 @@ moment.fn.businessAdd = function (number, period) {
     day.add(signal, period);
 
     if (day.isBusinessDay()) {
-      remaining--;
+      remaining -= 1;
     }
   }
 
@@ -116,7 +121,7 @@ moment.fn.nextBusinessDay = function () {
     if (this.add(1, 'd').isBusinessDay()) {
       break;
     }
-    loop++;
+    loop += 1;
   }
   return this;
 };
@@ -131,7 +136,7 @@ moment.fn.prevBusinessDay = function () {
     if (this.subtract(1, 'd').isBusinessDay()) {
       break;
     }
-    loop++;
+    loop += 1;
   }
   return this;
 };

@@ -8,9 +8,9 @@ var holidayFormat = 'MM-DD-YYYY';
 var resetLocale = function (done) {
   moment.updateLocale('us', {
     holidays: [
-      '07/04/2016'
+      '2016-07-04'
     ],
-    holidayFormat: 'MM/DD/YYYY',
+    holidayFormat: 'YYYY-MM-DD',
     workingWeekdays: [1, 2, 3, 4, 5],
   });
   done();
@@ -103,7 +103,7 @@ describe('Moment Business Days', function () {
         });
         done();
       });
-      it('Should be true', function (done) {
+      it('should be true', function (done) {
         var saturday = moment().endOf('week');
         expect(saturday.isBusinessDay()).to.be.true;
         done();
@@ -250,7 +250,7 @@ describe('Moment Business Days', function () {
   });
   describe('Business Diff', function () {
     afterEach(resetLocale);
-    it('Should calculate number of busines days between dates', function () {
+    it('should calculate number of business days between dates', function () {
       var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(
         moment('05-08-2017', 'MM-DD-YYYY')
       );
@@ -262,20 +262,20 @@ describe('Moment Business Days', function () {
       );
       expect(diff).to.eql(5);
     });
-    it('Should be negative if start is after end and relative is true', function () {
+    it('should be negative if start is after end and relative is true', function () {
       var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(
         moment('05-15-2017', 'MM-DD-YYYY'),
         true
       );
       expect(diff).to.eql(-5);
     });
-    it('Should be positive if start is after end and relative is false', function () {
+    it('should be positive if start is after end and relative is false', function () {
       var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(
         moment('05-15-2017', 'MM-DD-YYYY')
       );
       expect(diff).to.eql(5);
     });
-    it('Should calculate nr of business days with custom workingdays', function () {
+    it('should calculate number of business days with custom workingdays', function () {
       moment.updateLocale('us', {
         workingWeekdays: [1, 2, 3, 4, 5, 6]
       });
@@ -284,7 +284,7 @@ describe('Moment Business Days', function () {
       );
       expect(diff).to.eql(6);
     });
-    it('Should calculate nr of business with all working days', function () {
+    it('should calculate number of business with all working days', function () {
       moment.updateLocale('us', {
         workingWeekdays: [0, 1, 2, 3, 4, 5, 6]
       });
@@ -293,25 +293,38 @@ describe('Moment Business Days', function () {
       );
       expect(diff).to.eql(31);
     });
-    it('Should be zero days if start and end is same', function () {
+    it('should be zero days if start and end is same', function () {
       var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(
         moment('05-08-2017', 'MM-DD-YYYY')
       );
       expect(diff).to.eql(0);
     });
-    it('Should be zero days if start and end is same disregarding hours', function () {
+    it('should be zero days if start and end is same disregarding hours', function () {
       var diff = moment('2018-08-16T19:06:57.665Z').businessDiff(
         moment('2018-08-16T18:06:57.665Z')
       );
       expect(diff).to.eql(0);
     });
-    it('Business diff should account for holidays', function () {
-      var start = moment('07/01/2016', 'MM/DD/YYYY');
-      var end = moment('07/10/2016', 'MM/DD/YYYY');
+    it('should account for holidays', function () {
+      var start = moment('2016-07-01');
+      var end = moment('2016-07-10');
       var diff = start.businessDiff(end);
-      expect(diff).to.eql(5);
+      expect(diff).to.eql(4);
     });
-    it('Business diff should disregard time (hour) in calculating business days', function () {
+    it('should not add an extra day when parameter is not a business day', function () {
+      var diff = moment('2021-02-22').businessDiff(
+        moment('2021-02-28')
+      );
+      expect(diff).to.eql(4);
+    });
+    it('should not add an extra day when original moment object is a non business day and is later than the parameter', function () {
+      var diff = moment('2021-02-28').businessDiff(
+        moment('2021-02-22'),
+        true
+      );
+      expect(diff).to.eql(4);
+    });
+    it('should disregard time (hour) in calculating business days', function () {
       var diff = moment('2018-09-04T14:48:46.000Z').businessDiff(
         moment('2018-08-30T11:48:46.000Z')
       );
@@ -320,34 +333,34 @@ describe('Moment Business Days', function () {
   });
   describe('Business Weeks', function () {
     afterEach(resetLocale);
-    it('Should return array of business weeks on .monthBusinessWeeks', function () {
+    it('should return array of business weeks on .monthBusinessWeeks', function () {
       var monthBusinessWeeks = moment('2019-02-02').monthBusinessWeeks();
       expect(monthBusinessWeeks).to.be.an('array').with.length(5);
     });
-    it('Should return array of business weeks on .businessWeeksBetween', function () {
+    it('should return array of business weeks on .businessWeeksBetween', function () {
       var businessWeeksBetween = moment('2019-02-02').businessWeeksBetween(moment('2019-04-02'));
       expect(businessWeeksBetween).to.be.an('array').with.length(9);
     });
   });
   describe('Aggregate functions return empty array on invalid object', function () {
     afterEach(resetLocale);
-    it('Should return empty array on .monthBusinessDays', function () {
+    it('should return empty array on .monthBusinessDays', function () {
       var monthBusinessDays = moment(null).monthBusinessDays();
       expect(monthBusinessDays).to.be.an('array').that.is.empty;
     });
-    it('Should return empty array on .monthNaturalDays', function () {
+    it('should return empty array on .monthNaturalDays', function () {
       var monthNaturalDays = moment(null).monthNaturalDays();
       expect(monthNaturalDays).to.be.an('array').that.is.empty;
     });
-    it('Should return empty array on .monthBusinessWeeks', function () {
+    it('should return empty array on .monthBusinessWeeks', function () {
       var monthBusinessWeeks = moment(null).monthBusinessWeeks();
       expect(monthBusinessWeeks).to.be.an('array').that.is.empty;
     });
-    it('Should return empty array on .monthNaturalWeeks', function () {
+    it('should return empty array on .monthNaturalWeeks', function () {
       var monthNaturalWeeks = moment(null).monthNaturalWeeks();
       expect(monthNaturalWeeks).to.be.an('array').that.is.empty;
     });
-    it('Should return empty array on .businessWeeksBetween', function () {
+    it('should return empty array on .businessWeeksBetween', function () {
       var businessWeeksBetween = moment(null).businessWeeksBetween();
       expect(businessWeeksBetween).to.be.an('array').that.is.empty;
     });
