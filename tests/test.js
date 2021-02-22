@@ -8,9 +8,9 @@ var holidayFormat = 'MM-DD-YYYY';
 var resetLocale = function (done) {
   moment.updateLocale('us', {
     holidays: [
-      '07/04/2016'
+      '2016-07-04'
     ],
-    holidayFormat: 'MM/DD/YYYY',
+    holidayFormat: 'YYYY-MM-DD',
     workingWeekdays: [1, 2, 3, 4, 5],
   });
   done();
@@ -305,11 +305,24 @@ describe('Moment Business Days', function () {
       );
       expect(diff).to.eql(0);
     });
-    it('Business diff should account for holidays', function () {
-      var start = moment('07/01/2016', 'MM/DD/YYYY');
-      var end = moment('07/10/2016', 'MM/DD/YYYY');
+    it('Should account for holidays', function () {
+      var start = moment('2016-07-01');
+      var end = moment('2016-07-10');
       var diff = start.businessDiff(end);
-      expect(diff).to.eql(5);
+      expect(diff).to.eql(4);
+    });
+    it('Ending on a non business day should not add an extra day', function () {
+      var diff = moment('2021-02-22').businessDiff(
+        moment('2021-02-28')
+      );
+      expect(diff).to.eql(4);
+    });
+    it('Ending on a non business day should not add an extra day even when reversed', function () {
+      var diff = moment('2021-02-28').businessDiff(
+        moment('2021-02-22'),
+        true
+      );
+      expect(diff).to.eql(4);
     });
     it('Business diff should disregard time (hour) in calculating business days', function () {
       var diff = moment('2018-09-04T14:48:46.000Z').businessDiff(
