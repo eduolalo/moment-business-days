@@ -22,9 +22,7 @@ describe('Moment Business Days', function () {
   describe('.prevBusinessDay', function () {
     describe('When today is Monday', function () {
       it('should be Friday', function (done) {
-        var monday = moment()
-          .startOf('week')
-          .add(1, 'days');
+        var monday = moment().startOf('week').add(1, 'days');
         var friday = monday.prevBusinessDay();
         expect(friday.format('dddd')).to.eql('Friday');
         done();
@@ -55,9 +53,7 @@ describe('Moment Business Days', function () {
   describe('.isBusinessDay', function () {
     describe('When today is a regular weekday', function () {
       it('should be true', function (done) {
-        var wednesday = moment()
-          .startOf('week')
-          .add(3, 'days');
+        var wednesday = moment().startOf('week').add(3, 'days');
         expect(wednesday.isBusinessDay()).to.be.true;
         done();
       });
@@ -225,10 +221,7 @@ describe('Moment Business Days', function () {
         done();
       });
       it('adds business hours only, excluding weekends', function (done) {
-        var newBusinessDay = moment('2015-11-06').businessAdd(
-          36,
-          'hours'
-        );
+        var newBusinessDay = moment('2015-11-06').businessAdd(36, 'hours');
         expect(newBusinessDay.format('D')).to.eql('9');
         done();
       });
@@ -256,58 +249,41 @@ describe('Moment Business Days', function () {
   describe('.businessDiff', function () {
     afterEach(resetLocale);
     it('should calculate number of business days between dates', function () {
-      var diff = moment('2017-05-15').businessDiff(
-        moment('2017-05-08')
-      );
+      var diff = moment('2017-05-15').businessDiff(moment('2017-05-08'));
       expect(diff).to.eql(5);
     });
     it('...and in reverse order', function () {
-      var diff = moment('2017-05-08').businessDiff(
-        moment('2017-05-15')
-      );
+      var diff = moment('2017-05-08').businessDiff(moment('2017-05-15'));
       expect(diff).to.eql(5);
     });
     it('should be negative if start is after end and relative is true', function () {
-      var diff = moment('2017-05-08').businessDiff(
-        moment('2017-05-15'),
-        true
-      );
+      var diff = moment('2017-05-08').businessDiff(moment('2017-05-15'), true);
       expect(diff).to.eql(-5);
     });
     it('should be positive if start is after end and relative is false', function () {
-      var diff = moment('2017-05-08').businessDiff(
-        moment('2017-05-15')
-      );
+      var diff = moment('2017-05-08').businessDiff(moment('2017-05-15'));
       expect(diff).to.eql(5);
     });
     it('should calculate number of business days with custom workingdays', function () {
       moment.updateLocale('us', {
         workingWeekdays: [1, 2, 3, 4, 5, 6]
       });
-      var diff = moment('2017-05-15').businessDiff(
-        moment('2017-05-08')
-      );
+      var diff = moment('2017-05-15').businessDiff(moment('2017-05-08'));
       expect(diff).to.eql(6);
     });
     it('should calculate number of business with all working days', function () {
       moment.updateLocale('us', {
         workingWeekdays: [0, 1, 2, 3, 4, 5, 6]
       });
-      var diff = moment('2017-06-18').businessDiff(
-        moment('2017-05-18')
-      );
+      var diff = moment('2017-06-18').businessDiff(moment('2017-05-18'));
       expect(diff).to.eql(31);
     });
     it('should be zero days if start and end is same', function () {
-      var diff = moment('2017-05-08').businessDiff(
-        moment('2017-05-08')
-      );
+      var diff = moment('2017-05-08').businessDiff(moment('2017-05-08'));
       expect(diff).to.eql(0);
     });
     it('should be zero days if start and end is same disregarding hours', function () {
-      var diff = moment('2018-08-16T19:06:57.665Z').businessDiff(
-        moment('2018-08-16T18:06:57.665Z')
-      );
+      var diff = moment('2018-08-16T19:06:57.665Z').businessDiff(moment('2018-08-16T18:06:57.665Z'));
       expect(diff).to.eql(0);
     });
     it('should account for holidays', function () {
@@ -317,22 +293,15 @@ describe('Moment Business Days', function () {
       expect(diff).to.eql(4);
     });
     it('should not add an extra day when parameter is not a business day', function () {
-      var diff = moment('2021-02-22').businessDiff(
-        moment('2021-02-28')
-      );
+      var diff = moment('2021-02-22').businessDiff(moment('2021-02-28'));
       expect(diff).to.eql(4);
     });
     it('should not add an extra day when original moment object is a non business day and is later than the parameter', function () {
-      var diff = moment('2021-02-28').businessDiff(
-        moment('2021-02-22'),
-        true
-      );
+      var diff = moment('2021-02-28').businessDiff(moment('2021-02-22'), true);
       expect(diff).to.eql(4);
     });
     it('should disregard time (hour) in calculating business days', function () {
-      var diff = moment('2018-09-04T14:48:46.000Z').businessDiff(
-        moment('2018-08-30T11:48:46.000Z')
-      );
+      var diff = moment('2018-09-04T14:48:46.000Z').businessDiff(moment('2018-08-30T11:48:46.000Z'));
       expect(diff).to.eql(3);
     });
   });
