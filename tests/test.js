@@ -3,14 +3,14 @@
 'use strict';
 var moment = require('../index');
 var expect = require('chai').expect;
-var holidayFormat = 'MM-DD-YYYY';
+var holidayFormat = 'YYYY-MM-DD';
 
 var resetLocale = function (done) {
   moment.updateLocale('us', {
     holidays: [
       '2016-07-04'
     ],
-    holidayFormat: 'YYYY-MM-DD',
+    holidayFormat: holidayFormat,
     workingWeekdays: [1, 2, 3, 4, 5],
   });
   done();
@@ -18,6 +18,7 @@ var resetLocale = function (done) {
 
 describe('Moment Business Days', function () {
   afterEach(resetLocale);
+
   describe('.prevBusinessDay', function () {
     describe('When today is Monday', function () {
       it('should be Friday', function (done) {
@@ -29,11 +30,12 @@ describe('Moment Business Days', function () {
         done();
       });
     });
+
     describe('On April 10th, 2019', function () {
       beforeEach(function (done) {
         moment.updateLocale('us', {
-          holidays: ['04-05-2019', '04-06-2019', '04-07-2019', '04-08-2019', '04-09-2019'],
-          holidayFormat: 'MM-DD-YYYY',
+          holidays: ['2019-04-05', '2019-04-06', '2019-04-07', '2019-04-08', '2019-04-09'],
+          holidayFormat: holidayFormat,
           workingWeekdays: [1],
           prevBusinessDayLimit: 31,
         });
@@ -43,12 +45,13 @@ describe('Moment Business Days', function () {
       afterEach(resetLocale);
 
       it('should be 1st when considering holidays and custom working days', function (done) {
-        var first = moment('04-10-2019', 'MM-DD-YYYY').prevBusinessDay();
+        var first = moment('2019-04-10').prevBusinessDay();
         expect(first.format('D')).to.eql('1');
         done();
       });
     });
   });
+
   describe('.isBusinessDay', function () {
     describe('When today is a regular weekday', function () {
       it('should be true', function (done) {
@@ -59,6 +62,7 @@ describe('Moment Business Days', function () {
         done();
       });
     });
+
     describe('When today is a weekend', function () {
       it('should be false', function (done) {
         var sunday = moment().startOf('week');
@@ -109,8 +113,9 @@ describe('Moment Business Days', function () {
         done();
       });
     });
+
     describe('When today is a holiday', function () {
-      var july4th = '07-04-2015';
+      var july4th = '2015-07-04';
 
       beforeEach(function (done) {
         moment.updateLocale('us', {
@@ -128,6 +133,7 @@ describe('Moment Business Days', function () {
       });
     });
   });
+
   describe('.businessDaysIntoMonth', function () {
     afterEach(resetLocale);
 
@@ -137,32 +143,28 @@ describe('Moment Business Days', function () {
         expect(businessDaysIntoMonth).to.be.NaN;
       });
     });
+
     describe('On Wednesday, September 23rd 2015', function () {
       it('should be 17 when there are no holidays', function (done) {
         moment.updateLocale('us', {
           workingWeekdays: null
         });
-        var businessDaysIntoMonth = moment(
-          '09-23-2015',
-          'MM-DD-YYYY'
-        ).businessDaysIntoMonth();
+        var businessDaysIntoMonth = moment('2015-09-23').businessDaysIntoMonth();
         expect(businessDaysIntoMonth).to.eql(17);
         done();
       });
       it('should be 16 when considering labor day', function (done) {
         moment.updateLocale('us', {
-          holidays: ['09-07-2015'],
+          holidays: ['2015-09-07'],
           holidayFormat: holidayFormat
         });
-        var businessDaysIntoMonth = moment(
-          '09-23-2015',
-          'MM-DD-YYYY'
-        ).businessDaysIntoMonth();
+        var businessDaysIntoMonth = moment('2015-09-23').businessDaysIntoMonth();
         expect(businessDaysIntoMonth).to.eql(16);
         done();
       });
     });
   });
+
   describe('.businessAdd', function () {
     afterEach(resetLocale);
 
@@ -177,6 +179,7 @@ describe('Moment Business Days', function () {
         expect(newBusinessDay.isValid()).to.be.false;
       });
     });
+
     describe('On Thursday, January 3rd 2019', function () {
       it('adds one business day, then converts to string with toISOString()', function (done) {
         var newBusinessDay = moment('2019-01-03T12:00:00.000Z').businessAdd(1, 'days');
@@ -184,44 +187,45 @@ describe('Moment Business Days', function () {
         done();
       });
     });
+
     describe('On Tuesday, November 3rd 2015', function () {
       it('adds business days only, excluding weekends, even over 2 weeks', function (done) {
-        var newBusinessDay = moment('11-03-2015', 'MM-DD-YYYY').businessAdd(5);
+        var newBusinessDay = moment('2015-11-03').businessAdd(5);
         expect(newBusinessDay.format('D')).to.eql('10');
         done();
       });
       it('adds business days only, excluding weekends', function (done) {
-        var newBusinessDay = moment('11-03-2015', 'MM-DD-YYYY').businessAdd(10);
+        var newBusinessDay = moment('2015-11-03', 'YYYY-MM-DD').businessAdd(10);
         expect(newBusinessDay.format('D')).to.eql('17');
         done();
       });
       it('adds business days only, excluding weekends, preserving time-of-day', function (done) {
-        var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(10);
-        expect(newBusinessDay.format('MM-DD-YYYY hh:mm:ss')).to.eql('11-17-2015 12:42:00');
+        var newBusinessDay = moment('2015-11-03 12:42:00', 'YYYY-MM-DD hh-mm-ss').businessAdd(10);
+        expect(newBusinessDay.format('YYYY-MM-DD hh:mm:ss')).to.eql('2015-11-17 12:42:00');
         done();
       });
       it('adds business days only, excluding weekends, rounding down fractional day values', function (done) {
-        var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(10.4);
+        var newBusinessDay = moment('2015-11-03 12:42:00', 'YYYY-MM-DD hh-mm-ss').businessAdd(10.4);
         expect(newBusinessDay.format('D')).to.eql('17');
         done();
       });
       it('adds business days only, excluding weekends, rounding up fractional day values', function (done) {
-        var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(10.5);
+        var newBusinessDay = moment('2015-11-03 12:42:00', 'YYYY-MM-DD hh-mm-ss').businessAdd(10.5);
         expect(newBusinessDay.format('D')).to.eql('18');
         done();
       });
       it('subtracts business days when negative values are added, excluding weekends, rounding down fractional day values', function (done) {
-        var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(-10.4);
+        var newBusinessDay = moment('2015-11-03 12:42:00', 'YYYY-MM-DD hh-mm-ss').businessAdd(-10.4);
         expect(newBusinessDay.format('D')).to.eql('20');
         done();
       });
       it('subtracts business days when negative values are added, excluding weekends, rounding up fractional day values', function (done) {
-        var newBusinessDay = moment('11-03-2015 12:42:00', 'MM-DD-YYYY hh-mm-ss').businessAdd(-10.5);
+        var newBusinessDay = moment('2015-11-03 12:42:00', 'YYYY-MM-DD hh-mm-ss').businessAdd(-10.5);
         expect(newBusinessDay.format('D')).to.eql('19');
         done();
       });
       it('adds business hours only, excluding weekends', function (done) {
-        var newBusinessDay = moment('11-06-2015', 'MM-DD-YYYY').businessAdd(
+        var newBusinessDay = moment('2015-11-06').businessAdd(
           36,
           'hours'
         );
@@ -230,48 +234,49 @@ describe('Moment Business Days', function () {
       });
       it('adds business days only, excluding weekends and holidays, if present', function (done) {
         moment.updateLocale('us', {
-          holidays: ['11-05-2015'],
+          holidays: ['2015-11-05'],
           holidayFormat: holidayFormat
         });
-        var newBusinessDay = moment('11-03-2015', 'MM-DD-YYYY').businessAdd(5);
+        var newBusinessDay = moment('2015-11-03').businessAdd(5);
         expect(newBusinessDay.format('D')).to.eql('11');
         done();
       });
       it('adds business days only, excluding weekends and holidays, if present, even over 2 weeks', function (done) {
         moment.updateLocale('us', {
-          holidays: ['11-05-2015', '11-12-2015'],
+          holidays: ['2015-11-05', '2015-11-12'],
           holidayFormat: holidayFormat
         });
-        var newBusinessDay = moment('11-03-2015', 'MM-DD-YYYY').businessAdd(10);
+        var newBusinessDay = moment('2015-11-03').businessAdd(10);
         expect(newBusinessDay.format('D')).to.eql('19');
         done();
       });
     });
   });
-  describe('Business Diff', function () {
+
+  describe('.businessDiff', function () {
     afterEach(resetLocale);
     it('should calculate number of business days between dates', function () {
-      var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(
-        moment('05-08-2017', 'MM-DD-YYYY')
+      var diff = moment('2017-05-15').businessDiff(
+        moment('2017-05-08')
       );
       expect(diff).to.eql(5);
     });
     it('...and in reverse order', function () {
-      var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(
-        moment('05-15-2017', 'MM-DD-YYYY')
+      var diff = moment('2017-05-08').businessDiff(
+        moment('2017-05-15')
       );
       expect(diff).to.eql(5);
     });
     it('should be negative if start is after end and relative is true', function () {
-      var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(
-        moment('05-15-2017', 'MM-DD-YYYY'),
+      var diff = moment('2017-05-08').businessDiff(
+        moment('2017-05-15'),
         true
       );
       expect(diff).to.eql(-5);
     });
     it('should be positive if start is after end and relative is false', function () {
-      var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(
-        moment('05-15-2017', 'MM-DD-YYYY')
+      var diff = moment('2017-05-08').businessDiff(
+        moment('2017-05-15')
       );
       expect(diff).to.eql(5);
     });
@@ -279,8 +284,8 @@ describe('Moment Business Days', function () {
       moment.updateLocale('us', {
         workingWeekdays: [1, 2, 3, 4, 5, 6]
       });
-      var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(
-        moment('05-08-2017', 'MM-DD-YYYY')
+      var diff = moment('2017-05-15').businessDiff(
+        moment('2017-05-08')
       );
       expect(diff).to.eql(6);
     });
@@ -288,14 +293,14 @@ describe('Moment Business Days', function () {
       moment.updateLocale('us', {
         workingWeekdays: [0, 1, 2, 3, 4, 5, 6]
       });
-      var diff = moment('06-18-2017', 'MM-DD-YYYY').businessDiff(
-        moment('05-18-2017', 'MM-DD-YYYY')
+      var diff = moment('2017-06-18').businessDiff(
+        moment('2017-05-18')
       );
       expect(diff).to.eql(31);
     });
     it('should be zero days if start and end is same', function () {
-      var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(
-        moment('05-08-2017', 'MM-DD-YYYY')
+      var diff = moment('2017-05-08').businessDiff(
+        moment('2017-05-08')
       );
       expect(diff).to.eql(0);
     });
@@ -331,17 +336,23 @@ describe('Moment Business Days', function () {
       expect(diff).to.eql(3);
     });
   });
-  describe('Business Weeks', function () {
+
+  describe('.monthBusinessWeeks', function () {
     afterEach(resetLocale);
     it('should return array of business weeks on .monthBusinessWeeks', function () {
       var monthBusinessWeeks = moment('2019-02-02').monthBusinessWeeks();
       expect(monthBusinessWeeks).to.be.an('array').with.length(5);
     });
+  });
+
+  describe('.businessWeeksBetween', function () {
+    afterEach(resetLocale);
     it('should return array of business weeks on .businessWeeksBetween', function () {
       var businessWeeksBetween = moment('2019-02-02').businessWeeksBetween(moment('2019-04-02'));
       expect(businessWeeksBetween).to.be.an('array').with.length(9);
     });
   });
+
   describe('Aggregate functions return empty array on invalid object', function () {
     afterEach(resetLocale);
     it('should return empty array on .monthBusinessDays', function () {
