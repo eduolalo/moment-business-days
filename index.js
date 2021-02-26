@@ -181,15 +181,15 @@ moment.fn.monthNaturalDays = function (fromToday) {
 moment.fn.monthBusinessWeeks = function (fromToday) {
   fromToday = fromToday || false;
   var startDate = fromToday ? this.clone() : this.clone().startOf('month');
-  return getBusinessWeeks(this, fromToday, null, startDate);
+  return _getBusinessWeeks(this, null, startDate);
 };
 
 moment.fn.businessWeeksBetween = function (endDate) {
   var startDate = this.clone();
-  return getBusinessWeeks(this, false, endDate, startDate);
+  return _getBusinessWeeks(this, endDate, startDate);
 };
 
-var getBusinessWeeks = function (self, fromToday, endDate, startDate) {
+var _getBusinessWeeks = function (self, endDate, startDate) {
   if (!self.isValid()) {
     return [];
   }
@@ -201,7 +201,7 @@ var getBusinessWeeks = function (self, fromToday, endDate, startDate) {
   var done = false;
 
   while (!done) {
-    if (day.day() >= 1 && day.day() < 6) {
+    if (day.isBusinessDay()) {
       daysArr.push(day.clone());
     }
 

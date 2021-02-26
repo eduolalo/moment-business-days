@@ -308,9 +308,27 @@ describe('Moment Business Days', function () {
 
   describe('.monthBusinessWeeks', function () {
     afterEach(resetLocale);
-    it('should return array of business weeks on .monthBusinessWeeks', function () {
+    it('should return array of weeks with business days', function () {
       var monthBusinessWeeks = moment('2019-02-02').monthBusinessWeeks();
       expect(monthBusinessWeeks).to.be.an('array').with.length(5);
+    });
+    it('should account for custom holidays when returning weeks', function () {
+      const holidays = [
+        '2021-01-01',
+        '2021-02-12', '2021-02-25',
+        '2021-04-01', '2021-04-02', '2021-04-03', '2021-04-04', '2021-04-09',
+        '2021-05-01', '2021-05-13',
+        '2021-06-12',
+        '2021-07-20',
+        '2021-08-21', '2021-08-30',
+        '2021-11-01', '2021-11-02', '2021-11-30',
+        '2021-12-08', '2021-12-24', '2021-12-25', '2021-12-30', '2021-12-31',
+      ]
+      moment.updateLocale('ph', { holidays, holidayFormat: holidayFormat });
+      const monthBusinessWeeks = moment('2021-01-01').monthBusinessWeeks();
+      expect(monthBusinessWeeks).to.be.an('array').with.length(6);
+      expect(monthBusinessWeeks[0]).to.eql([]);
+      expect(monthBusinessWeeks[5]).to.eql([]); // Week with Sunday 31st Jan
     });
   });
 
