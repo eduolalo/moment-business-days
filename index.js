@@ -38,6 +38,7 @@ moment.fn.businessDaysIntoMonth = function () {
   if (!this.isValid()) {
     return NaN;
   }
+
   var businessDay = this.isBusinessDay() ? this : this.prevBusinessDay();
   var monthBusinessDays = businessDay.monthBusinessDays();
   var businessDaysIntoMonth;
@@ -113,7 +114,6 @@ moment.fn.businessSubtract = function (number, period) {
 
 moment.fn.nextBusinessDay = function () {
   var locale = this.localeData();
-
   var loop = 1;
   var defaultNextBusinessDayLimit = 7;
   var limit = locale._nextBusinessDayLimit || defaultNextBusinessDayLimit;
@@ -128,7 +128,6 @@ moment.fn.nextBusinessDay = function () {
 
 moment.fn.prevBusinessDay = function () {
   var locale = this.localeData();
-
   var loop = 1;
   var defaultPrevBusinessDayLimit = 7;
   var limit = locale._prevBusinessDayLimit || defaultPrevBusinessDayLimit;
@@ -145,9 +144,9 @@ moment.fn.monthBusinessDays = function (partialEndDate) {
   if (!this.isValid()) {
     return [];
   }
-  var me = this.clone();
-  var day = me.clone().startOf('month');
-  var end = partialEndDate || me.clone().endOf('month');
+
+  var day = this.clone().startOf('month');
+  var end = partialEndDate || this.clone().endOf('month');
   var daysArr = [];
   var done = false;
   while (!done) {
@@ -165,9 +164,9 @@ moment.fn.monthNaturalDays = function (fromToday) {
   if (!this.isValid()) {
     return [];
   }
-  var me = this.clone();
-  var day = fromToday ? me.clone() : me.clone().startOf('month');
-  var end = me.clone().endOf('month');
+
+  var day = fromToday ? this.clone() : this.clone().startOf('month');
+  var end = this.clone().endOf('month');
   var daysArr = [];
   var done = false;
   while (!done) {
@@ -181,36 +180,36 @@ moment.fn.monthNaturalDays = function (fromToday) {
 
 moment.fn.monthBusinessWeeks = function (fromToday) {
   fromToday = fromToday || false;
-  var me = this.clone();
-  var startDate = fromToday ? me.clone() : me.clone().startOf('month');
-  return getBusinessWeeks(this, fromToday, null, startDate);
+  var startDate = fromToday ? this.clone() : this.clone().startOf('month');
+  return _getBusinessWeeks(this, null, startDate);
 };
 
 moment.fn.businessWeeksBetween = function (endDate) {
-  var me = this.clone();
-  var startDate = me.clone();
-  return getBusinessWeeks(this, false, endDate, startDate);
+  var startDate = this.clone();
+  return _getBusinessWeeks(this, endDate, startDate);
 };
 
-var getBusinessWeeks = function (self, fromToday, endDate, startDate) {
+var _getBusinessWeeks = function (self, endDate, startDate) {
   if (!self.isValid()) {
     return [];
   }
-  var me = self.clone();
+
   var day = startDate;
-  var end = endDate ? moment(endDate).clone() : me.clone().endOf('month');
+  var end = endDate ? moment(endDate).clone() : self.clone().endOf('month');
   var weeksArr = [];
   var daysArr = [];
   var done = false;
 
   while (!done) {
-    if (day.day() >= 1 && day.day() < 6) {
+    if (day.isBusinessDay()) {
       daysArr.push(day.clone());
     }
+
     if (day.day() === 5) {
       weeksArr.push(daysArr);
       daysArr = [];
     }
+
     if (end.diff(day.add(1, 'd')) < 0) {
       if (daysArr.length < 5) {
         weeksArr.push(daysArr);
@@ -218,6 +217,7 @@ var getBusinessWeeks = function (self, fromToday, endDate, startDate) {
       done = true;
     }
   }
+
   return weeksArr;
 };
 
@@ -225,9 +225,9 @@ moment.fn.monthNaturalWeeks = function (fromToday) {
   if (!this.isValid()) {
     return [];
   }
-  var me = this.clone();
-  var day = fromToday ? me.clone() : me.clone().startOf('month');
-  var end = me.clone().endOf('month');
+
+  var day = fromToday ? this.clone() : this.clone().startOf('month');
+  var end = this.clone().endOf('month');
   var weeksArr = [];
   var daysArr = [];
   var done = false;
