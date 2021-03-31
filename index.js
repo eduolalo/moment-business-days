@@ -7,10 +7,8 @@ if (typeof require === 'function') {
 moment.fn.isHoliday = function () {
   var locale = this.localeData();
 
-  if (locale._holidays) {
-    if (locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0) {
-      return true;
-    }
+  if (locale._holidays && locale._holidays.indexOf(this.format(locale._holidayFormat)) >= 0) {
+    return true;
   }
 
   if (locale.holiday) {
@@ -28,7 +26,12 @@ moment.fn.isBusinessDay = function () {
   var defaultWorkingWeekdays = [1, 2, 3, 4, 5];
   var workingWeekdays = locale._workingWeekdays || defaultWorkingWeekdays;
 
+  if (locale._forcedBusinessDays && locale._forcedBusinessDays.indexOf(this.format(locale._forcedBusinessDaysFormat)) >= 0) {
+    return true;
+  }
+
   if (this.isHoliday()) return false;
+
   if (workingWeekdays.indexOf(this.day()) >= 0) return true;
 
   return false;

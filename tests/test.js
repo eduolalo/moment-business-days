@@ -4,6 +4,7 @@
 var moment = require('../index');
 var expect = require('chai').expect;
 var holidayFormat = 'YYYY-MM-DD';
+var forcedBusinessDaysFormat = 'YYYY-MM-DD';
 
 var resetLocale = function (done) {
   moment.updateLocale('us', {
@@ -125,6 +126,25 @@ describe('Moment Business Days', function () {
 
       it('should be false', function (done) {
         expect(moment(july4th, holidayFormat).isBusinessDay()).to.be.false;
+        done();
+      });
+    });
+
+    describe('When today is a non-business days, but it is forced as business day', function () {
+      var boxingDay = '2020-12-26';
+
+      beforeEach(function (done) {
+        moment.updateLocale('us', {
+          forcedBusinessDays: [ boxingDay ],
+          forcedBusinessDaysFormat: forcedBusinessDaysFormat
+        });
+        done();
+      });
+
+      afterEach(resetLocale);
+
+      it('should be true', function (done) {
+        expect(moment(boxingDay, forcedBusinessDaysFormat).isBusinessDay()).to.be.true;
         done();
       });
     });
