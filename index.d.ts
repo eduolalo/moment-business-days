@@ -24,6 +24,8 @@ declare module 'moment' {
     interface LocaleSpecification {
         holidays?: string[];
         holidayFormat?: string;
+        forcedBusinessDays?: string[];
+        forcedBusinessDaysFormat?: string;
         nextBusinessDayLimit?: number;
         prevBusinessDayLimit?: number;
         workingWeekdays?: number[];

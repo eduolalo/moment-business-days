@@ -31,20 +31,23 @@ var moment = require('moment-business-days');
 
 ## Configuration
 
-### Use localization to configure holidays
+### Use localization to configure holidays and forced business days
 
 ````javascript
 var moment = require('moment-business-days');
 
-var july4th = '07-04-2015';
-var laborDay = '09-07-2015';
+var july4th = '2015-07-04';
+var laborDay = '2015-09-07';
+var boxingDay = '2020-12-26';
 
 moment.updateLocale('us', {
-   holidays: [july4th, laborDay],
-   holidayFormat: 'MM-DD-YYYY'
+  holidays: [ july4th, laborDay ],
+  holidayFormat: 'YYYY-MM-DD',
+  forcedBusinessDays: [ boxingDay ],
+  forcedBusinessDaysFormat: 'YYYY-MM-DD'
 });
 
-// moment-business-days will now stop considering these holidays as business days
+// moment-business-days will now stop considering these holidays as business days, but still count forced business days.
 ````
 
 ### Use localization to configure business days
@@ -74,11 +77,11 @@ Check if the date is among the holidays specified, and return **true** or **fals
 Check if the date is a business day, and return **true** or **false**:
 
 ```javascript
-// 31-01-2015 is Saturday
-moment('31-01-2015', 'DD-MM-YYYY').isBusinessDay() // false
+// 31st is Saturday
+moment('2015-01-31', 'YYYY-MM-DD').isBusinessDay() // false
 
-// 30-01-2015 is Friday
-moment('30-01-2015', 'DD-MM-YYYY').isBusinessDay() // true
+// 30th is Friday
+moment('2015-01-30', 'YYYY-MM-DD').isBusinessDay() // true
 ```
 
 #### `.businessDaysIntoMonth()` => number
@@ -90,7 +93,7 @@ Calculate the amount of business days in the month of the **Moment.js** object.
 Calculate the amount of business days between dates.
 
 ```javascript
-var diff = moment('05-15-2017', 'MM-DD-YYYY').businessDiff(moment('05-08-2017','MM-DD-YYYY'));
+var diff = moment('2017-05-15', 'YYYY-MM-DD').businessDiff(moment('2017-05-08', 'YYYY-MM-DD'));
 // diff = 5
 ```
 
@@ -99,7 +102,7 @@ which is a departure from moment's `diff`. To match the behavior of `diff` pass
 `true` as the second argument to `businessDiff`:
 
 ```javascript
-var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(moment('05-15-2017','MM-DD-YYYY'), true);
+var diff = moment('05-08-2017', 'YYYY-MM-DD').businessDiff(moment('05-15-2017', 'YYYY-MM-DD'), true);
 // diff = -5
 ```
 
@@ -108,8 +111,8 @@ var diff = moment('05-08-2017', 'MM-DD-YYYY').businessDiff(moment('05-15-2017','
 Will add the given number of days skipping non-business days, returning a **Moment.js** object:
 
 ```javascript
-// 30-01-2015 is Friday, DD-MM-YYYY is the format
-moment('30-01-2015', 'DD-MM-YYYY').businessAdd(3)._d // Wed Feb 04 2015 00:00:00 GMT-0600 (CST)
+// 30th is Friday
+moment('2015-01-30', 'YYYY-MM-DD').businessAdd(3)._d // Wed Feb 04 2015 00:00:00 GMT-0600 (CST)
 ```
 
 #### `.businessSubtract(days)` => Moment
@@ -117,7 +120,7 @@ moment('30-01-2015', 'DD-MM-YYYY').businessAdd(3)._d // Wed Feb 04 2015 00:00:00
 Will subtract the given number of days skipping non-business days, returning a **Moment.js** object:
 
 ```javascript
-// 27-01-2015 is Tuesday, DD-MM-YYYY is the format
+// 27th is Tuesday
 moment('27-01-2015', 'DD-MM-YYYY').businessSubtract(3)._d // Thu Jan 22 2015 00:00:00 GMT-0600 (CST)
 ```
 
@@ -126,11 +129,11 @@ moment('27-01-2015', 'DD-MM-YYYY').businessSubtract(3)._d // Thu Jan 22 2015 00:
 Will retrieve the next business date as a **Moment.js** object:
 
 ```javascript
-// Next business day from Friday 30-01-2015
-moment('30-01-2015', 'DD-MM-YYYY').nextBusinessDay()._d // Mon Feb 02 2015 00:00:00 GMT-0600 (CST)
+// Next business day from Friday 30th
+moment('2015-01-30', 'YYYY-MM-DD').nextBusinessDay()._d // Mon Feb 02 2015 00:00:00 GMT-0600 (CST)
 
-// Next business day from Monday 02-02-2015
-moment('02-02-2015', 'DD-MM-YYYY').nextBusinessDay()._d //Tue Feb 03 2015 00:00:00 GMT-0600 (CST)
+// Next business day from Monday 2nd
+moment('2015-02-02', 'YYYY-MM-DD').nextBusinessDay()._d // Tue Feb 03 2015 00:00:00 GMT-0600 (CST)
 ```
 
 By default only 7 days into the future are checked for the next business day. To search beyond 7 days
@@ -148,11 +151,11 @@ moment.updateLocale('us', {
 Will retrieve the previous business date as a **Moment.js** object:
 
 ```javascript
-// Previous business day of Monday 02-02-2015
-moment('02-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d // Fri Jan 30 2015 00:00:00 GMT-0600 (CST)
+// Previous business day of Monday 2nd
+moment('2015-02-02', 'YYYY-MM-DD').prevBusinessDay()._d // Fri Jan 30 2015 00:00:00 GMT-0600 (CST)
 
-// Previous business day of Tuesday 03-02-2015
-moment('03-02-2015', 'DD-MM-YYYY').prevBusinessDay()._d //Mon Feb 02 2015 00:00:00 GMT-0600 (CST)
+// Previous business day of Tuesday 3rd
+moment('2015-02-03', 'YYYY-MM-DD').prevBusinessDay()._d // Mon Feb 02 2015 00:00:00 GMT-0600 (CST)
 ```
 
 By default only the last 7 days are checked for the previous business day. To search beyond 7 days
@@ -171,12 +174,12 @@ Retrieve an array of the business days in the month, each one is a **Moment.js**
 
 ```javascript
 // Business days in month January 2015
-moment('01-01-2015', 'DD-MM-YYYY').monthBusinessDays()
+moment('2015-01-01', 'YYYY-MM-DD').monthBusinessDays()
 
 /*
 [ { _isAMomentObject: true,
-    _i: '01-01-2015',
-    _f: 'DD-MM-YYYY',
+    _i: '2015-01-01',
+    _f: 'YYYY-MM-DD',
     _isUTC: false,
     _pf:{ ... },
     _locale: { ... },
@@ -202,7 +205,7 @@ Thursday 1st and Friday 2nd. **Each day in the week arrays are Moment.js objects
 
 ```javascript
 // Business weeks in month January 2015
-moment('01-01-2015', 'DD-MM-YYYY').monthBusinessWeeks()
+moment('2015-01-01', 'YYYY-MM-DD').monthBusinessWeeks()
 
 /*
 [ [ { _isAMomentObject: true,
