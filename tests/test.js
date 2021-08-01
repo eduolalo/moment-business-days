@@ -312,6 +312,55 @@ describe('Moment Business Days', function () {
       var diff = start.businessDiff(end);
       expect(diff).to.eql(4);
     });
+    it('should account for holidays', function () {
+      moment.updateLocale('us', {
+        holidays: ['2021-07-22'],
+        holidayFormat: holidayFormat
+      });
+      expect(moment('2021-07-20').businessDiff(moment('2021-07-20'))).to.eql(0);
+    });
+    it('should account for holidays', function () {
+      moment.updateLocale('us', {
+        holidays: ['2021-07-22'],
+        holidayFormat: holidayFormat
+      });
+      expect(moment('2021-07-20').businessDiff(moment('2021-07-21'))).to.eql(1);
+    });
+    it('should account for holidays', function () {
+      moment.updateLocale('us', {
+        holidays: ['2021-07-22'],
+        holidayFormat: holidayFormat
+      });
+      expect(moment('2021-07-20').businessDiff(moment('2021-07-22'))).to.eql(1);
+    });
+    it('should account for holidays', function () {
+      moment.updateLocale('us', {
+        holidays: ['2021-07-22'],
+        holidayFormat: holidayFormat
+      });
+      expect(moment('2021-07-20').businessDiff(moment('2021-07-23'))).to.eql(2);
+    });
+    it('should account for holidays', function () {
+      moment.updateLocale('us', {
+        holidays: ['2021-07-22'],
+        holidayFormat: holidayFormat
+      });
+      expect(moment('2021-07-20').businessDiff(moment('2021-07-24'))).to.eql(2);
+    });
+    it('should account for holidays', function () {
+      moment.updateLocale('us', {
+        holidays: ['2021-07-22'],
+        holidayFormat: holidayFormat
+      });
+      expect(moment('2021-07-20').businessDiff(moment('2021-07-25'))).to.eql(2);
+    });
+    it('should account for holidays', function () {
+      moment.updateLocale('us', {
+        holidays: ['2021-07-22'],
+        holidayFormat: holidayFormat
+      });
+      expect(moment('2021-07-20').businessDiff(moment('2021-07-26'))).to.eql(3);
+    });
     it('should not add an extra day when parameter is not a business day', function () {
       var diff = moment('2021-02-22').businessDiff(moment('2021-02-28'));
       expect(diff).to.eql(4);
