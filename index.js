@@ -82,7 +82,7 @@ moment.fn.businessDiff = function (param, relative) {
     if (start.isBusinessDay()) {
       daysBetween += 1;
     }
-    start.add(1, 'd');
+    start.add(1, 'day');
 
   }
 
@@ -134,7 +134,7 @@ moment.fn.nextBusinessDay = function () {
   var defaultNextBusinessDayLimit = 7;
   var limit = locale._nextBusinessDayLimit || defaultNextBusinessDayLimit;
   while (loop < limit) {
-    if (this.add(1, 'd').isBusinessDay()) {
+    if (this.add(1, 'day').isBusinessDay()) {
       break;
     }
     loop += 1;
@@ -148,7 +148,7 @@ moment.fn.prevBusinessDay = function () {
   var defaultPrevBusinessDayLimit = 7;
   var limit = locale._prevBusinessDayLimit || defaultPrevBusinessDayLimit;
   while (loop < limit) {
-    if (this.subtract(1, 'd').isBusinessDay()) {
+    if (this.subtract(1, 'day').isBusinessDay()) {
       break;
     }
     loop += 1;
@@ -175,7 +175,7 @@ moment.fn.monthBusinessDays = function (partialEndDate) {
     }
 
     day.add(1, 'day');
-    }
+  }
 
   return daysArr;
 };
@@ -191,7 +191,7 @@ moment.fn.monthNaturalDays = function (fromToday) {
   var done = false;
   while (!done) {
     daysArr.push(day.clone());
-    if (end.diff(day.add(1, 'd')) < 0) {
+    if (end.diff(day.add(1, 'day')) < 0) {
       done = true;
     }
   }
@@ -230,7 +230,7 @@ var _getBusinessWeeks = function (self, endDate, startDate) {
       daysArr = [];
     }
 
-    if (end.diff(day.add(1, 'd')) < 0) {
+    if (end.diff(day.add(1, 'day')) < 0) {
       if (daysArr.length < 5) {
         weeksArr.push(daysArr);
       }
@@ -258,7 +258,7 @@ moment.fn.monthNaturalWeeks = function (fromToday) {
       weeksArr.push(daysArr);
       daysArr = [];
     }
-    if (end.diff(day.add(1, 'd')) < 0) {
+    if (end.diff(day.add(1, 'day')) < 0) {
       if (daysArr.length < 7) {
         weeksArr.push(daysArr);
       }
