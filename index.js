@@ -164,15 +164,19 @@ moment.fn.monthBusinessDays = function (partialEndDate) {
   var day = this.clone().startOf('month');
   var end = partialEndDate || this.clone().endOf('month');
   var daysArr = [];
-  var done = false;
-  while (!done) {
+
+  for(;;) {
+    if (day.isAfter(end)) {
+      break;
+    }
+
     if (day.isBusinessDay()) {
       daysArr.push(day.clone());
     }
-    if (end.diff(day.add(1, 'd')) < 0) {
-      done = true;
+
+    day.add(1, 'day');
     }
-  }
+
   return daysArr;
 };
 

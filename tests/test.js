@@ -441,6 +441,34 @@ describe('Moment Business Days', function () {
     });
   });
 
+  describe('.monthBusinessDays', function () {
+    afterEach(resetLocale);
+    it('should return array of business days in the month', function () {
+      var businessWeeksBetween = moment('2021-12-01').monthBusinessDays();
+      expect(businessWeeksBetween).to.be.an('array').with.length(23);
+    });
+    it('should return array of business days in the month until the specified date', function () {
+      var businessWeeksBetween = moment('2021-12-01').monthBusinessDays(moment('2021-12-15'));
+      expect(businessWeeksBetween).to.be.an('array').with.length(11);
+    });
+    it('should return array of business days in the month, excluding holydays', function () {
+      moment.updateLocale('us', {
+        holidays: ['2021-12-08', '2021-12-25', '2021-12-26'],
+        holidayFormat: holidayFormat
+      });
+      var businessWeeksBetween = moment('2021-12-01').monthBusinessDays();
+      expect(businessWeeksBetween).to.be.an('array').with.length(22);
+    });
+    it('should return array of business days in the month until the specified date, excluding holydays', function () {
+      moment.updateLocale('us', {
+        holidays: ['2021-12-08', '2021-12-25', '2021-12-26'],
+        holidayFormat: holidayFormat
+      });
+      var businessWeeksBetween = moment('2021-12-01').monthBusinessDays(moment('2021-12-15'));
+      expect(businessWeeksBetween).to.be.an('array').with.length(10);
+    });
+  });
+
   describe('.businessWeeksBetween', function () {
     afterEach(resetLocale);
     it('should return array of business weeks on .businessWeeksBetween', function () {
