@@ -179,6 +179,46 @@ describe('Moment Business Days', function () {
         done();
       });
     });
+
+    describe('On Thursday, July 1st 2021', function () {
+      it('Should count only 1 day', function (done) {
+        var businessDaysIntoMonth = moment('2021-07-01').businessDaysIntoMonth();
+        expect(businessDaysIntoMonth).to.eql(1);
+        done();
+      });
+    });
+
+    describe('On Saturday, July 31st 2021', function () {
+      it('Should count all the business days', function (done) {
+        var businessDaysIntoMonth = moment('2021-07-31').businessDaysIntoMonth();
+        expect(businessDaysIntoMonth).to.eql(22);
+        done();
+      });
+    });
+
+    describe('On Sunday, August 1nd 2021', function () {
+      it('Should not have any days', function (done) {
+        var businessDaysIntoMonth = moment('2021-08-01').businessDaysIntoMonth();
+        expect(businessDaysIntoMonth).to.eql(0);
+        done();
+      });
+    });
+
+    describe('On Sunday, August 15th 2021', function () {
+      it('Should only count the business days until then', function (done) {
+        var businessDaysIntoMonth = moment('2021-08-15').businessDaysIntoMonth();
+        expect(businessDaysIntoMonth).to.eql(10);
+        done();
+      });
+    });
+
+    describe('On Sunday, August 31st 2021', function () {
+      it('Should count all the business days', function (done) {
+        var businessDaysIntoMonth = moment('2021-08-31').businessDaysIntoMonth();
+        expect(businessDaysIntoMonth).to.eql(22);
+        done();
+      });
+    });
   });
 
   describe('.businessAdd', function () {
@@ -382,7 +422,7 @@ describe('Moment Business Days', function () {
       expect(monthBusinessWeeks).to.be.an('array').with.length(5);
     });
     it('should account for custom holidays when returning weeks', function () {
-      const holidays = [
+      var holidays = [
         '2021-01-01',
         '2021-02-12', '2021-02-25',
         '2021-04-01', '2021-04-02', '2021-04-03', '2021-04-04', '2021-04-09',
@@ -393,8 +433,8 @@ describe('Moment Business Days', function () {
         '2021-11-01', '2021-11-02', '2021-11-30',
         '2021-12-08', '2021-12-24', '2021-12-25', '2021-12-30', '2021-12-31',
       ]
-      moment.updateLocale('ph', { holidays, holidayFormat: holidayFormat });
-      const monthBusinessWeeks = moment('2021-01-01').monthBusinessWeeks();
+      moment.updateLocale('ph', { holidays: holidays, holidayFormat: holidayFormat });
+      var monthBusinessWeeks = moment('2021-01-01').monthBusinessWeeks();
       expect(monthBusinessWeeks).to.be.an('array').with.length(6);
       expect(monthBusinessWeeks[0]).to.eql([]);
       expect(monthBusinessWeeks[5]).to.eql([]); // Week with Sunday 31st Jan

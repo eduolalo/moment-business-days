@@ -42,14 +42,27 @@ moment.fn.businessDaysIntoMonth = function () {
     return NaN;
   }
 
-  var businessDay = this.isBusinessDay() ? this : this.prevBusinessDay();
-  var monthBusinessDays = businessDay.monthBusinessDays();
-  var businessDaysIntoMonth;
-  monthBusinessDays.map(function (day, index) {
-    if (day.format('M/DD/YY') === businessDay.format('M/DD/YY')) {
-      businessDaysIntoMonth = index + 1;
+  var businessDay = this.clone();
+  var pointer = this.clone().startOf('month');
+  var end = this.clone().endOf('month');
+  var businessDaysIntoMonth = 0;
+
+  for(;;) {
+    if (pointer.isAfter(end, 'day')) {
+      break;
     }
-  });
+
+    if (pointer.isBusinessDay()) {
+      businessDaysIntoMonth += 1;
+    }
+
+    if (businessDay.isSame(pointer, 'day')) {
+      break;
+    }
+
+    pointer.add(1, 'day')
+  }
+
   return businessDaysIntoMonth;
 };
 

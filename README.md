@@ -86,7 +86,21 @@ moment('2015-01-30', 'YYYY-MM-DD').isBusinessDay() // true
 
 #### `.businessDaysIntoMonth()` => number
 
-Calculate the amount of business days in the month of the **Moment.js** object.
+Calculate the amount of business days since the beginning of the month of the **Moment.js** object.
+
+```javascript
+var businessDaysSinceBeginningOfTheMonth = moment('2021-07-01', 'YYYY-MM-DD').businessDaysIntoMonth();
+// businessDaysSinceBeginningOfTheMonth = 1
+
+var businessDaysSinceBeginningOfTheMonth = moment('2021-08-01', 'YYYY-MM-DD').businessDaysIntoMonth();
+// businessDaysSinceBeginningOfTheMonth = 0
+
+var businessDaysSinceBeginningOfTheMonth = moment('2021-08-15', 'YYYY-MM-DD').businessDaysIntoMonth();
+// businessDaysSinceBeginningOfTheMonth = 10
+
+var businessDaysSinceBeginningOfTheMonth = moment('2021-08-31', 'YYYY-MM-DD').businessDaysIntoMonth();
+// businessDaysSinceBeginningOfTheMonth = 22
+```
 
 #### `.businessDiff()` => number
 
