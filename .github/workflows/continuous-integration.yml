@@ -7,8 +7,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macOS-10.15, macos-latest, windows-2016, windows-2019, windows-latest, ubuntu-18.04, ubuntu-latest]
-        node: [4, 6, 8, 10, 12, 14]
+        os:
+          [
+            macOS-10.15,
+            macos-latest,
+            windows-2016,
+            windows-2019,
+            windows-latest,
+            ubuntu-18.04,
+            ubuntu-latest,
+          ]
+        node: [12, 14, 16]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
