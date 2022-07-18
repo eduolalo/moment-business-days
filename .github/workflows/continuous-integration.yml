@@ -11,7 +11,6 @@ jobs:
           [
             macOS-10.15,
             macos-latest,
-            windows-2016,
             windows-2019,
             windows-latest,
             ubuntu-18.04,
