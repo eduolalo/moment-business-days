@@ -18,10 +18,10 @@
         "days",
         "plugin"
     ],
+    "type": "module",
     "peerDependencies": {
         "moment": "2.x.x"
     },
-    "engine": "node >= 0.10.26",
     "author": "Christian Rodriguez Cisneros <rcchristiane@gmail.com>",
     "license": "MIT",
     "bugs": {
@@ -29,8 +29,9 @@
     },
     "homepage": "https://github.com/kalmecak/moment-business-days",
     "devDependencies": {
-        "chai": "^3.5.0",
-        "mocha": "^5.2.0",
-        "moment": "2.x.x"
+        "chai": "^4.3.6",
+        "mocha": "^10.0.0",
+        "moment": "^2.29.3",
+        "ts-node": "^10.8.2"
     }
 }

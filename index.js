@@ -1,8 +1,4 @@
-'use strict';
-
-if (typeof require === 'function') {
-  var moment = require('moment');
-}
+import moment from "moment"
 
 moment.fn.isHoliday = function () {
   var locale = this.localeData();
@@ -268,6 +264,4 @@ moment.fn.monthNaturalWeeks = function (fromToday) {
   return weeksArr;
 };
 
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = moment;
-}
+export default moment

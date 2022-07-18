@@ -1,8 +1,8 @@
-/* eslint-env mocha */
+import moment from "../index.js"
+import chai from "chai"
 
-'use strict';
-var moment = require('../index');
-var expect = require('chai').expect;
+const expect = chai.expect
+
 var holidayFormat = 'YYYY-MM-DD';
 var forcedBusinessDaysFormat = 'YYYY-MM-DD';
 
