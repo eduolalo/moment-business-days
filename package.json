@@ -4,6 +4,7 @@
     "description": "MomentJS plugin to use business days",
     "main": "index.js",
     "types": "./index.d.ts",
+    "type": "module",
     "scripts": {
         "test": "mocha tests/*"
     },
