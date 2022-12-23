@@ -5,8 +5,15 @@
 </a>
 
 This is a [Moment.js](https://github.com/moment/moment/) plugin that allows you to work with only business days
-(Monday to Friday). You can customize the working week, and also set custom dates for holidays to exclude them from
-being counted as business days, for example **national holidays**.
+(ie. Monday to Friday). You can customize the working week, and also set custom dates for holidays to exclude them from being counted as business days, for example **national holidays**.
+
+**NB:** when adding or subtracting business days from a moment object that falls on a non-business day, that day will not be counted. For example:
+
+```js
+// Using default working weekdays: Monday to Friday ([1, 2, 3, 4, 5])
+const saturday = moment('2022-01-01'); // Moment<2022-01-01T00:00:00+01:00>, Saturday
+const saturdayPlusTwo = saturday.businessAdd(2); // Moment<2022-01-04T00:00:00+01:00>, Tuesday
+```
 
 ## Notes
 * This plugin works on both server and client side.
